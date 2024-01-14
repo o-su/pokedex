@@ -6,6 +6,8 @@ export const pokemonsQuery = gql`
       edges {
         id
         name
+        image
+        types
       }
     }
   }

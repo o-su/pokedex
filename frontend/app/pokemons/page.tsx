@@ -7,6 +7,7 @@ import { CatalogIcon, FavoriteIcon } from "../common/components/icon";
 import { Switch } from "../common/components/switch";
 import { pokemonsQuery } from "./pokemonsApi";
 import { PokemonCategory } from "./pokemonsTypes";
+import { PokemonCard } from "./components/pokemonCard";
 
 export default function PokemonsPage(): JSX.Element {
   const { loading, error, data } = useQuery(pokemonsQuery);
@@ -34,7 +35,24 @@ export default function PokemonsPage(): JSX.Element {
           <FavoriteIcon /> Favorites
         </Switch>
       </ContentSwitcher>
-      {data?.pokemons.edges.map((pokemon: any) => pokemon.name)}
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          flexWrap: "wrap",
+          gap: "5px 5px",
+          width: "100%",
+        }}
+      >
+        {data?.pokemons.edges.map((pokemon: any) => (
+          <PokemonCard
+            name={pokemon.name}
+            image={pokemon.image}
+            types={pokemon.types}
+            key={pokemon.id}
+          />
+        ))}
+      </div>
     </div>
   );
 }
