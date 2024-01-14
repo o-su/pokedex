@@ -19,6 +19,8 @@ import { Select } from "../common/components/select";
 import { usePokemonTypes } from "./pokemonTypesApi";
 import { Layout } from "../common/types/layoutTypes";
 import { Route } from "../common/constants/routeConstants";
+import { Padding } from "../common/components/layout/padding";
+import { PokemonsFilter } from "./parts/pokemonsFilter";
 
 export default function PokemonsPage(): JSX.Element {
   const [selectedCategory, setSelectedCategory] = useState<PokemonCategory>(
@@ -36,86 +38,52 @@ export default function PokemonsPage(): JSX.Element {
     search,
   });
 
-  const changeCategory = useCallback((category) => {
-    setSelectedCategory(category.name);
-  }, []);
-
-  const changeLayout = useCallback((layout) => {
-    setLayout(layout.name);
-  }, []);
-
   return (
     <Container>
-      <ContentSwitcher onChange={changeCategory}>
-        <Switch
-          name={PokemonCategory.All}
-          selected={selectedCategory === PokemonCategory.All}
-        >
-          <CatalogIcon /> All
-        </Switch>
-        <Switch
-          name={PokemonCategory.Favorite}
-          selected={selectedCategory === PokemonCategory.Favorite}
-        >
-          <FavoriteFilledIcon /> Favorites
-        </Switch>
-      </ContentSwitcher>
+      <Padding top={10}>
+        <PokemonsFilter
+          selectedCategory={selectedCategory}
+          pokemonTypes={pokemonTypesData?.pokemonTypes}
+          pokemonType={pokemonType}
+          search={search}
+          layout={layout}
+          changeCategory={setSelectedCategory}
+          setPokemonType={setPokemonType}
+          setSearch={setSearch}
+          changeLayout={setLayout}
+        />
 
-      <Select
-        id="pokemon-type"
-        items={pokemonTypesData?.pokemonTypes}
-        placeholder="Select Type"
-        value={pokemonType}
-        allowCustomValue={false}
-        selectedItem={pokemonType}
-        onChange={({ selectedItem }: any) => setPokemonType(selectedItem)}
-      />
-
-      <SearchInput
-        size="lg"
-        placeholder="Search"
-        labelText="Search"
-        closeButtonLabelText="Clear search input"
-        value={search}
-        onChange={(event) => setSearch(event.target.value)}
-      />
-
-      <ContentSwitcher onChange={changeLayout}>
-        <Switch name={Layout.Grid} selected={layout === Layout.Grid}>
-          <GridIcon />
-        </Switch>
-        <Switch name={Layout.List} selected={layout === Layout.List}>
-          <ListIcon />
-        </Switch>
-      </ContentSwitcher>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: layout === Layout.Grid ? "row" : "column",
-          flexWrap: "wrap",
-          gap: "5px 5px",
-          width: "100%",
-          justifyContent: "center",
-        }}
-      >
-        {data?.pokemons.edges.map((pokemon) => (
-          <Link
-            href={Route.Pokemon + encodeURIComponent(pokemon.name)}
-            key={pokemon.id}
+        <Padding top={10} bottom={10}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: layout === Layout.Grid ? "row" : "column",
+              flexWrap: "wrap",
+              gap: "5px 5px",
+              width: "100%",
+              justifyContent: "center",
+            }}
           >
-            <PokemonCard
-              name={pokemon.name}
-              image={pokemon.image}
-              types={pokemon.types}
-              favorite={pokemon.isFavorite}
-              onToggleFavorite={(event) => {
-                event.preventDefault();
-                togglePokemonFavorite(pokemon.id, pokemon.isFavorite);
-              }}
-            />
-          </Link>
-        ))}
-      </div>
+            {data?.pokemons.edges.map((pokemon) => (
+              <Link
+                href={Route.Pokemon + encodeURIComponent(pokemon.name)}
+                key={pokemon.id}
+              >
+                <PokemonCard
+                  name={pokemon.name}
+                  image={pokemon.image}
+                  types={pokemon.types}
+                  favorite={pokemon.isFavorite}
+                  onToggleFavorite={(event) => {
+                    event.preventDefault();
+                    togglePokemonFavorite(pokemon.id, pokemon.isFavorite);
+                  }}
+                />
+              </Link>
+            ))}
+          </div>
+        </Padding>
+      </Padding>
     </Container>
   );
 }

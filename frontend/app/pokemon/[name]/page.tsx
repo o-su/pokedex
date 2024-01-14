@@ -13,6 +13,7 @@ import { useParams } from "next/navigation";
 
 import { usePokemon } from "./pokemonApi";
 import { Route } from "@/app/common/constants/routeConstants";
+import { Padding } from "@/app/common/components/layout/padding";
 
 export default function PokemonPage(): JSX.Element {
   const { name } = useParams();
@@ -22,51 +23,53 @@ export default function PokemonPage(): JSX.Element {
   if (pokemon) {
     return (
       <Container>
-        <StackLayout size={5}>
-          <Breadcrumb>
-            <BreadcrumbItem>
-              <Link href={Route.Pokemons}>Pokémons</Link>
-            </BreadcrumbItem>
-            <BreadcrumbItem>{pokemon.name}</BreadcrumbItem>
-          </Breadcrumb>
+        <Padding top={10}>
+          <StackLayout size={5}>
+            <Breadcrumb>
+              <BreadcrumbItem>
+                <Link href={Route.Pokemons}>Pokémons</Link>
+              </BreadcrumbItem>
+              <BreadcrumbItem>{pokemon.name}</BreadcrumbItem>
+            </Breadcrumb>
 
-          <Center>
-            <Image
-              src={pokemon.image}
-              width={280}
-              height={280}
-              alt={pokemon.name}
-            />
-          </Center>
-          <h1>{name}</h1>
-          {pokemon.types}
-          <ProgressBar
-            helperText={`CP: ${pokemon.maxCP}`}
-            value={pokemon.maxCP / 100}
-          />
-          <ProgressBar
-            helperText={`HP: ${pokemon.maxHP}`}
-            value={pokemon.maxHP / 100}
-          />
-          <div>
-            Weight {pokemon.weight.minimum} - {pokemon.weight.maximum}
-          </div>
-          <div>
-            Height {pokemon.height.minimum} - {pokemon.height.maximum}
-          </div>
-          <div>
-            Evolutions
-            {pokemon.evolutions.map((evolution) => (
-              <PokemonCard
-                key={evolution.id}
-                name={evolution.name}
-                image={evolution.image}
-                favorite={evolution.isFavorite}
-                onToggleFavorite={() => undefined} // TODO: implement
+            <Center>
+              <Image
+                src={pokemon.image}
+                width={280}
+                height={280}
+                alt={pokemon.name}
               />
-            ))}
-          </div>
-        </StackLayout>
+            </Center>
+            <h1>{name}</h1>
+            {pokemon.types}
+            <ProgressBar
+              helperText={`CP: ${pokemon.maxCP}`}
+              value={pokemon.maxCP / 100}
+            />
+            <ProgressBar
+              helperText={`HP: ${pokemon.maxHP}`}
+              value={pokemon.maxHP / 100}
+            />
+            <div>
+              Weight {pokemon.weight.minimum} - {pokemon.weight.maximum}
+            </div>
+            <div>
+              Height {pokemon.height.minimum} - {pokemon.height.maximum}
+            </div>
+            <div>
+              Evolutions
+              {pokemon.evolutions.map((evolution) => (
+                <PokemonCard
+                  key={evolution.id}
+                  name={evolution.name}
+                  image={evolution.image}
+                  favorite={evolution.isFavorite}
+                  onToggleFavorite={() => undefined} // TODO: implement
+                />
+              ))}
+            </div>
+          </StackLayout>
+        </Padding>
       </Container>
     );
   } else {
