@@ -18,6 +18,7 @@ import { SearchInput } from "../common/components/searchInput";
 import { Select } from "../common/components/select";
 import { usePokemonTypes } from "./pokemonTypesApi";
 import { Layout } from "../common/types/layoutTypes";
+import { Route } from "../common/constants/routeConstants";
 
 export default function PokemonsPage(): JSX.Element {
   const [selectedCategory, setSelectedCategory] = useState<PokemonCategory>(
@@ -61,6 +62,7 @@ export default function PokemonsPage(): JSX.Element {
       </ContentSwitcher>
 
       <Select
+        id="pokemon-type"
         items={pokemonTypesData?.pokemonTypes}
         placeholder="Select Type"
         value={pokemonType}
@@ -99,7 +101,7 @@ export default function PokemonsPage(): JSX.Element {
       >
         {data?.pokemons.edges.map((pokemon) => (
           <Link
-            href={`/pokemon/${encodeURIComponent(pokemon.name)}`}
+            href={Route.Pokemon + encodeURIComponent(pokemon.name)}
             key={pokemon.id}
           >
             <PokemonCard
@@ -107,9 +109,10 @@ export default function PokemonsPage(): JSX.Element {
               image={pokemon.image}
               types={pokemon.types}
               favorite={pokemon.isFavorite}
-              onToggleFavorite={() =>
-                togglePokemonFavorite(pokemon.id, pokemon.isFavorite)
-              }
+              onToggleFavorite={(event) => {
+                event.preventDefault();
+                togglePokemonFavorite(pokemon.id, pokemon.isFavorite);
+              }}
             />
           </Link>
         ))}

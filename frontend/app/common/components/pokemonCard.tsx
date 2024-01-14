@@ -1,5 +1,7 @@
 "use client";
+import { MouseEvent, ReactSVGElement } from "react";
 import Image from "@/node_modules/next/image";
+
 import { FavoriteFilledIcon, FavoriteIcon } from "@/app/common/components/icon";
 import { Color } from "@/app/common/constants/colorConstants";
 
@@ -8,7 +10,7 @@ export type PokemonCardProps = {
   image: string;
   favorite: boolean;
   types?: string[];
-  onToggleFavorite: () => void;
+  onToggleFavorite: (event: MouseEvent<ReactSVGElement>) => void;
 };
 
 export function PokemonCard({

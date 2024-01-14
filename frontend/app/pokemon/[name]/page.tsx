@@ -12,6 +12,7 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 
 import { usePokemon } from "./pokemonApi";
+import { Route } from "@/app/common/constants/routeConstants";
 
 export default function PokemonPage(): JSX.Element {
   const { name } = useParams();
@@ -24,7 +25,7 @@ export default function PokemonPage(): JSX.Element {
         <StackLayout size={5}>
           <Breadcrumb>
             <BreadcrumbItem>
-              <Link href={`/pokemons`}>Pokémons</Link>
+              <Link href={Route.Pokemons}>Pokémons</Link>
             </BreadcrumbItem>
             <BreadcrumbItem>{pokemon.name}</BreadcrumbItem>
           </Breadcrumb>
