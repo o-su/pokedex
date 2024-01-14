@@ -1,14 +1,28 @@
-import { gql } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
+import { useCallback } from "react";
 
-export const pokemonsQuery = gql`
-  query pokemons {
-    pokemons(query: { search: "" }) {
-      edges {
-        id
-        name
-        image
-        types
-      }
-    }
-  }
-`;
+import { pokemonsFavoriteMutation, pokemonsQuery } from "./pokemonsQueries";
+
+export function usePokemons(query: { favorite: boolean }) {
+  const result = useQuery(pokemonsQuery, {
+    variables: {
+      query: {
+        search: "",
+        filter: { isFavorite: query.favorite },
+      },
+    },
+  });
+
+  const [markAsFavorite, { loading, error }] = useMutation(
+    pokemonsFavoriteMutation
+  );
+
+  const markPokemonAsFavorite = useCallback(
+    (pokemonId: string) => {
+      markAsFavorite({ variables: { id: pokemonId } });
+    },
+    [markAsFavorite]
+  );
+
+  return { ...result, markPokemonAsFavorite };
+}

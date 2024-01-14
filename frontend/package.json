@@ -6,12 +6,17 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "codegen:compile": "graphql-codegen",
+    "codegen:watch": "graphql-codegen -w",
     "lint": "next lint"
   },
   "dependencies": {
     "@apollo/client": "3.8.9",
     "@carbon/icons-react": "11.33.0",
     "@carbon/react": "1.47.0",
+    "@graphql-codegen/cli": "^5.0.0",
+    "@graphql-codegen/client-preset": "^4.1.0",
+    "@graphql-typed-document-node/core": "^3.2.0",
     "graphql": "16.8.1",
     "next": "14.0.4",
     "react-dom": "^18",

@@ -1,27 +1,28 @@
 "use client";
 import { useCallback, useState } from "react";
-import { useQuery } from "@apollo/client";
 
 import { ContentSwitcher } from "../common/components/contentSwitcher";
-import { CatalogIcon, FavoriteIcon } from "../common/components/icon";
+import { CatalogIcon, FavoriteFilledIcon } from "../common/components/icon";
 import { Switch } from "../common/components/switch";
-import { pokemonsQuery } from "./pokemonsApi";
 import { PokemonCategory } from "./pokemonsTypes";
 import { PokemonCard } from "./components/pokemonCard";
+import { usePokemons } from "./pokemonsApi";
 
 export default function PokemonsPage(): JSX.Element {
-  const { loading, error, data } = useQuery(pokemonsQuery);
   const [selectedCategory, setSelectedCategory] = useState<PokemonCategory>(
     PokemonCategory.All
   );
+  const { loading, error, data, markPokemonAsFavorite } = usePokemons({
+    favorite: selectedCategory === PokemonCategory.Favorite,
+  });
 
-  const onCategoryChange = useCallback((category) => {
+  const changeCategory = useCallback((category) => {
     setSelectedCategory(category.name);
   }, []);
 
   return (
     <div>
-      <ContentSwitcher onChange={onCategoryChange}>
+      <ContentSwitcher onChange={changeCategory}>
         <Switch
           name={PokemonCategory.All}
           selected={selectedCategory === PokemonCategory.All}
@@ -32,7 +33,7 @@ export default function PokemonsPage(): JSX.Element {
           name={PokemonCategory.Favorite}
           selected={selectedCategory === PokemonCategory.Favorite}
         >
-          <FavoriteIcon /> Favorites
+          <FavoriteFilledIcon /> Favorites
         </Switch>
       </ContentSwitcher>
       <div
@@ -44,12 +45,13 @@ export default function PokemonsPage(): JSX.Element {
           width: "100%",
         }}
       >
-        {data?.pokemons.edges.map((pokemon: any) => (
+        {data?.pokemons.edges.map((pokemon) => (
           <PokemonCard
             name={pokemon.name}
             image={pokemon.image}
             types={pokemon.types}
             key={pokemon.id}
+            onFavorite={() => markPokemonAsFavorite(pokemon.id)}
           />
         ))}
       </div>
