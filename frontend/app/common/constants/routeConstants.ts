@@ -1,5 +1,5 @@
 export enum Route {
-  Home = "/home",
+  Home = "/",
   Pokemons = "/pokemons",
   Pokemon = "/pokemon/",
 }
