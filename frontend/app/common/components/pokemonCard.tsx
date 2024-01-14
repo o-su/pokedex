@@ -4,6 +4,7 @@ import Image from "@/node_modules/next/image";
 
 import { FavoriteFilledIcon, FavoriteIcon } from "@/app/common/components/icon";
 import { Color } from "@/app/common/constants/colorConstants";
+import { useTheme } from "@carbon/react";
 
 export type PokemonCardProps = {
   name: string;
@@ -20,6 +21,7 @@ export function PokemonCard({
   favorite,
   onToggleFavorite,
 }: PokemonCardProps): JSX.Element {
+  const { theme } = useTheme();
   const FavoriteActiveIcon = favorite ? FavoriteFilledIcon : FavoriteIcon;
 
   return (
@@ -32,10 +34,16 @@ export function PokemonCard({
       <div
         style={{
           padding: "30px 10px",
-          background: Color.White,
+          background: theme === "white" ? Color.White : Color.PhilippineGray,
         }}
       >
-        <Image src={image} width={120} height={120} alt={name} />
+        <Image
+          src={image}
+          width={120}
+          height={120}
+          alt={name}
+          style={{ borderRadius: 3 }}
+        />
       </div>
 
       <div style={{ padding: 5 }}>

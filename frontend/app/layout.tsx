@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import { AppHeader } from "./common/components/appHeader";
 import { AppLayout } from "./common/components/layout/appLayout";
 import "@carbon/react/index.scss";
+import "@carbon/react/scss/_zone.scss";
 
 import "./globals.css";
 import { Providers } from "./providers";
@@ -22,7 +23,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={inter.className} style={{ height: "100%" }}>
         <Providers>
           <AppLayout header={<AppHeader />}>{children}</AppLayout>
         </Providers>

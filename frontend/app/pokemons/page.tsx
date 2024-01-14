@@ -88,7 +88,6 @@ export default function PokemonsPage(): JSX.Element {
           <ListIcon />
         </Switch>
       </ContentSwitcher>
-
       <div
         style={{
           display: "flex",
