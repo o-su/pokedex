@@ -1,5 +1,6 @@
 "use client";
 import { useCallback, useState } from "react";
+import Link from "next/link";
 
 import { ContentSwitcher } from "../common/components/contentSwitcher";
 import { CatalogIcon, FavoriteFilledIcon } from "../common/components/icon";
@@ -7,6 +8,7 @@ import { Switch } from "../common/components/switch";
 import { PokemonCategory } from "./pokemonsTypes";
 import { PokemonCard } from "./components/pokemonCard";
 import { usePokemons } from "./pokemonsApi";
+import { Container } from "../common/components/layout/container";
 
 export default function PokemonsPage(): JSX.Element {
   const [selectedCategory, setSelectedCategory] = useState<PokemonCategory>(
@@ -21,7 +23,7 @@ export default function PokemonsPage(): JSX.Element {
   }, []);
 
   return (
-    <div>
+    <Container>
       <ContentSwitcher onChange={changeCategory}>
         <Switch
           name={PokemonCategory.All}
@@ -47,18 +49,22 @@ export default function PokemonsPage(): JSX.Element {
         }}
       >
         {data?.pokemons.edges.map((pokemon) => (
-          <PokemonCard
-            name={pokemon.name}
-            image={pokemon.image}
-            types={pokemon.types}
-            favorite={pokemon.isFavorite}
+          <Link
+            href={`/pokemon/${encodeURIComponent(pokemon.name)}`}
             key={pokemon.id}
-            onToggleFavorite={() =>
-              togglePokemonFavorite(pokemon.id, pokemon.isFavorite)
-            }
-          />
+          >
+            <PokemonCard
+              name={pokemon.name}
+              image={pokemon.image}
+              types={pokemon.types}
+              favorite={pokemon.isFavorite}
+              onToggleFavorite={() =>
+                togglePokemonFavorite(pokemon.id, pokemon.isFavorite)
+              }
+            />
+          </Link>
         ))}
       </div>
-    </div>
+    </Container>
   );
 }

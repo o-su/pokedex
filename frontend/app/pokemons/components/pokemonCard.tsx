@@ -6,8 +6,8 @@ import { Color } from "@/app/common/constants/colorConstants";
 export type PokemonCardProps = {
   name: string;
   image: string;
-  types: string[];
   favorite: boolean;
+  types?: string[];
   onToggleFavorite: () => void;
 };
 
@@ -45,7 +45,7 @@ export function PokemonCard({
           size={20}
           onClick={onToggleFavorite}
         />
-        <div style={{ fontSize: 15 }}>{types.join(", ")}</div>
+        {types && <div style={{ fontSize: 15 }}>{types.join(", ")}</div>}
       </div>
     </div>
   );
