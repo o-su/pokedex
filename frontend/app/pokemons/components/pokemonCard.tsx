@@ -1,21 +1,25 @@
 "use client";
 import Image from "@/node_modules/next/image";
-import { FavoriteIcon } from "@/app/common/components/icon";
+import { FavoriteFilledIcon, FavoriteIcon } from "@/app/common/components/icon";
 import { Color } from "@/app/common/constants/colorConstants";
 
 export type PokemonCardProps = {
   name: string;
   image: string;
   types: string[];
-  onFavorite: () => void;
+  favorite: boolean;
+  onToggleFavorite: () => void;
 };
 
 export function PokemonCard({
   name,
   image,
   types,
-  onFavorite,
+  favorite,
+  onToggleFavorite,
 }: PokemonCardProps): JSX.Element {
+  const FavoriteActiveIcon = favorite ? FavoriteFilledIcon : FavoriteIcon;
+
   return (
     <div
       style={{
@@ -25,20 +29,21 @@ export function PokemonCard({
     >
       <div
         style={{
-          paddingTop: 30,
-          paddingBottom: 30,
+          padding: "30px 10px",
           background: Color.White,
         }}
       >
-        <Image src={image} width={124} height={124} alt={name} />
+        <Image src={image} width={120} height={120} alt={name} />
       </div>
 
       <div style={{ padding: 5 }}>
         <div style={{ fontWeight: "bold" }}>{name}</div>
-        <FavoriteIcon
-          style={{ float: "right" }}
+
+        <FavoriteActiveIcon
+          style={{ float: "right", cursor: "pointer" }}
           color={Color.Red}
-          onClick={onFavorite}
+          size={20}
+          onClick={onToggleFavorite}
         />
         <div style={{ fontSize: 15 }}>{types.join(", ")}</div>
       </div>

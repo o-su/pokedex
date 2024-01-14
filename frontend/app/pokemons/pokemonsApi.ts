@@ -1,7 +1,11 @@
 import { useMutation, useQuery } from "@apollo/client";
 import { useCallback } from "react";
 
-import { pokemonsFavoriteMutation, pokemonsQuery } from "./pokemonsQueries";
+import {
+  pokemonsMarkFavoriteMutation,
+  pokemonsQuery,
+  pokemonsUnmarkFavoriteMutation,
+} from "./pokemonsQueries";
 
 export function usePokemons(query: { favorite: boolean }) {
   const result = useQuery(pokemonsQuery, {
@@ -13,9 +17,15 @@ export function usePokemons(query: { favorite: boolean }) {
     },
   });
 
-  const [markAsFavorite, { loading, error }] = useMutation(
-    pokemonsFavoriteMutation
-  );
+  const [
+    markAsFavorite,
+    { loading: markAsFavoriteLoading, error: markAsFavoriteError },
+  ] = useMutation(pokemonsMarkFavoriteMutation);
+
+  const [
+    unmarkAsFavorite,
+    { loading: unmarkAsFavoriteLoading, error: unmarkAsFavoriteError },
+  ] = useMutation(pokemonsUnmarkFavoriteMutation);
 
   const markPokemonAsFavorite = useCallback(
     (pokemonId: string) => {
@@ -24,5 +34,29 @@ export function usePokemons(query: { favorite: boolean }) {
     [markAsFavorite]
   );
 
-  return { ...result, markPokemonAsFavorite };
+  const unmarkPokemonAsFavorite = useCallback(
+    (pokemonId: string) => {
+      unmarkAsFavorite({ variables: { id: pokemonId } });
+    },
+    [unmarkAsFavorite]
+  );
+
+  const togglePokemonFavorite = useCallback(
+    (pokemonId: string, favorite: boolean) => {
+      if (favorite) {
+        unmarkPokemonAsFavorite(pokemonId);
+      } else {
+        markPokemonAsFavorite(pokemonId);
+      }
+    },
+    [unmarkPokemonAsFavorite, markPokemonAsFavorite]
+  );
+
+  return {
+    ...result,
+    favoriteLoading: markAsFavoriteLoading || unmarkAsFavoriteLoading,
+    markPokemonAsFavorite,
+    unmarkPokemonAsFavorite,
+    togglePokemonFavorite,
+  };
 }

@@ -12,7 +12,7 @@ export default function PokemonsPage(): JSX.Element {
   const [selectedCategory, setSelectedCategory] = useState<PokemonCategory>(
     PokemonCategory.All
   );
-  const { loading, error, data, markPokemonAsFavorite } = usePokemons({
+  const { loading, error, data, togglePokemonFavorite } = usePokemons({
     favorite: selectedCategory === PokemonCategory.Favorite,
   });
 
@@ -43,6 +43,7 @@ export default function PokemonsPage(): JSX.Element {
           flexWrap: "wrap",
           gap: "5px 5px",
           width: "100%",
+          justifyContent: "center",
         }}
       >
         {data?.pokemons.edges.map((pokemon) => (
@@ -50,8 +51,11 @@ export default function PokemonsPage(): JSX.Element {
             name={pokemon.name}
             image={pokemon.image}
             types={pokemon.types}
+            favorite={pokemon.isFavorite}
             key={pokemon.id}
-            onFavorite={() => markPokemonAsFavorite(pokemon.id)}
+            onToggleFavorite={() =>
+              togglePokemonFavorite(pokemon.id, pokemon.isFavorite)
+            }
           />
         ))}
       </div>

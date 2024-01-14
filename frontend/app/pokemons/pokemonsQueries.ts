@@ -8,15 +8,26 @@ export const pokemonsQuery = gql(`
         name
         image
         types
+        isFavorite
       }
     }
   }
 `);
 
-export const pokemonsFavoriteMutation = gql(`
+export const pokemonsMarkFavoriteMutation = gql(`
   mutation favoritePokemon($id: ID!) {
     favoritePokemon(id: $id) {
       id
+      isFavorite
+    }
+  }
+`);
+
+export const pokemonsUnmarkFavoriteMutation = gql(`
+  mutation unFavoritePokemon($id: ID!) {
+    unFavoritePokemon(id: $id) {
+      id
+      isFavorite
     }
   }
 `);
