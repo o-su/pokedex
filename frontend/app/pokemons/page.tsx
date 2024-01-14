@@ -3,7 +3,12 @@ import { useCallback, useState } from "react";
 import Link from "next/link";
 
 import { ContentSwitcher } from "../common/components/contentSwitcher";
-import { CatalogIcon, FavoriteFilledIcon } from "../common/components/icon";
+import {
+  CatalogIcon,
+  FavoriteFilledIcon,
+  GridIcon,
+  ListIcon,
+} from "../common/components/icon";
 import { Switch } from "../common/components/switch";
 import { PokemonCategory } from "./pokemonsTypes";
 import { PokemonCard } from "../common/components/pokemonCard";
@@ -12,6 +17,7 @@ import { Container } from "../common/components/layout/container";
 import { SearchInput } from "../common/components/searchInput";
 import { Select } from "../common/components/select";
 import { usePokemonTypes } from "./pokemonTypesApi";
+import { Layout } from "../common/types/layoutTypes";
 
 export default function PokemonsPage(): JSX.Element {
   const [selectedCategory, setSelectedCategory] = useState<PokemonCategory>(
@@ -20,6 +26,7 @@ export default function PokemonsPage(): JSX.Element {
   const [search, setSearch] = useState<string>("");
   const [pokemonType, setPokemonType] = useState<string>("");
   const { data: pokemonTypesData } = usePokemonTypes();
+  const [layout, setLayout] = useState<Layout>(Layout.Grid);
   const { loading, error, data, togglePokemonFavorite } = usePokemons({
     filter: {
       isFavorite: selectedCategory === PokemonCategory.Favorite,
@@ -30,6 +37,10 @@ export default function PokemonsPage(): JSX.Element {
 
   const changeCategory = useCallback((category) => {
     setSelectedCategory(category.name);
+  }, []);
+
+  const changeLayout = useCallback((layout) => {
+    setLayout(layout.name);
   }, []);
 
   return (
@@ -67,10 +78,19 @@ export default function PokemonsPage(): JSX.Element {
         onChange={(event) => setSearch(event.target.value)}
       />
 
+      <ContentSwitcher onChange={changeLayout}>
+        <Switch name={Layout.Grid} selected={layout === Layout.Grid}>
+          <GridIcon />
+        </Switch>
+        <Switch name={Layout.List} selected={layout === Layout.List}>
+          <ListIcon />
+        </Switch>
+      </ContentSwitcher>
+
       <div
         style={{
           display: "flex",
-          flexDirection: "row",
+          flexDirection: layout === Layout.Grid ? "row" : "column",
           flexWrap: "wrap",
           gap: "5px 5px",
           width: "100%",

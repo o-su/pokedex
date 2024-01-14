@@ -1,5 +1,13 @@
-import { Catalog, Favorite, FavoriteFilled } from "@carbon/icons-react";
+import {
+  Catalog,
+  Favorite,
+  FavoriteFilled,
+  List,
+  Grid,
+} from "@carbon/icons-react";
 
 export const CatalogIcon = Catalog;
 export const FavoriteIcon = Favorite;
 export const FavoriteFilledIcon = FavoriteFilled;
+export const ListIcon = List;
+export const GridIcon = Grid;
