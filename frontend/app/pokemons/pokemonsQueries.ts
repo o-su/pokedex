@@ -14,6 +14,12 @@ export const pokemonsQuery = gql(`
   }
 `);
 
+export const pokemonTypesQuery = gql(`
+  query pokemonTypes {
+    pokemonTypes
+  }
+`);
+
 export const pokemonsMarkFavoriteMutation = gql(`
   mutation favoritePokemon($id: ID!) {
     favoritePokemon(id: $id) {

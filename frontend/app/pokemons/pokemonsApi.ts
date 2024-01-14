@@ -11,10 +11,7 @@ import {
 export function usePokemons(query: PokemonsQueryInput) {
   const result = useQuery(pokemonsQuery, {
     variables: {
-      query: {
-        search: query.search,
-        filter: { isFavorite: query.filter?.isFavorite },
-      },
+      query,
     },
   });
 

@@ -10,15 +10,20 @@ import { PokemonCard } from "../common/components/pokemonCard";
 import { usePokemons } from "./pokemonsApi";
 import { Container } from "../common/components/layout/container";
 import { SearchInput } from "../common/components/searchInput";
+import { Select } from "../common/components/select";
+import { usePokemonTypes } from "./pokemonTypesApi";
 
 export default function PokemonsPage(): JSX.Element {
   const [selectedCategory, setSelectedCategory] = useState<PokemonCategory>(
     PokemonCategory.All
   );
   const [search, setSearch] = useState<string>("");
+  const [pokemonType, setPokemonType] = useState<string>("");
+  const { data: pokemonTypesData } = usePokemonTypes();
   const { loading, error, data, togglePokemonFavorite } = usePokemons({
     filter: {
       isFavorite: selectedCategory === PokemonCategory.Favorite,
+      type: pokemonType,
     },
     search,
   });
@@ -43,6 +48,16 @@ export default function PokemonsPage(): JSX.Element {
           <FavoriteFilledIcon /> Favorites
         </Switch>
       </ContentSwitcher>
+
+      <Select
+        items={pokemonTypesData?.pokemonTypes}
+        placeholder="Select Type"
+        value={pokemonType}
+        allowCustomValue={false}
+        selectedItem={pokemonType}
+        onChange={({ selectedItem }: any) => setPokemonType(selectedItem)}
+      />
+
       <SearchInput
         size="lg"
         placeholder="Search"
@@ -51,6 +66,7 @@ export default function PokemonsPage(): JSX.Element {
         value={search}
         onChange={(event) => setSearch(event.target.value)}
       />
+
       <div
         style={{
           display: "flex",
