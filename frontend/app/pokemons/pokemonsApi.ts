@@ -1,5 +1,6 @@
 import { useMutation, useQuery } from "@apollo/client";
 import { useCallback } from "react";
+import { PokemonsQueryInput } from "../gql/graphql";
 
 import {
   pokemonsMarkFavoriteMutation,
@@ -7,12 +8,12 @@ import {
   pokemonsUnmarkFavoriteMutation,
 } from "./pokemonsQueries";
 
-export function usePokemons(query: { favorite: boolean }) {
+export function usePokemons(query: PokemonsQueryInput) {
   const result = useQuery(pokemonsQuery, {
     variables: {
       query: {
-        search: "",
-        filter: { isFavorite: query.favorite },
+        search: query.search,
+        filter: { isFavorite: query.filter?.isFavorite },
       },
     },
   });

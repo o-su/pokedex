@@ -5,7 +5,7 @@ import { Center } from "@/app/common/components/layout/center";
 import { Container } from "@/app/common/components/layout/container";
 import { StackLayout } from "@/app/common/components/layout/stackLayout";
 import { ProgressBar } from "@/app/common/components/progressBar";
-import { PokemonCard } from "@/app/pokemons/components/pokemonCard";
+import { PokemonCard } from "@/app/common/components/pokemonCard";
 
 import Image from "next/image";
 import Link from "next/link";

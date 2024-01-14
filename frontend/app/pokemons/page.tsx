@@ -6,16 +6,21 @@ import { ContentSwitcher } from "../common/components/contentSwitcher";
 import { CatalogIcon, FavoriteFilledIcon } from "../common/components/icon";
 import { Switch } from "../common/components/switch";
 import { PokemonCategory } from "./pokemonsTypes";
-import { PokemonCard } from "./components/pokemonCard";
+import { PokemonCard } from "../common/components/pokemonCard";
 import { usePokemons } from "./pokemonsApi";
 import { Container } from "../common/components/layout/container";
+import { SearchInput } from "../common/components/searchInput";
 
 export default function PokemonsPage(): JSX.Element {
   const [selectedCategory, setSelectedCategory] = useState<PokemonCategory>(
     PokemonCategory.All
   );
+  const [search, setSearch] = useState<string>("");
   const { loading, error, data, togglePokemonFavorite } = usePokemons({
-    favorite: selectedCategory === PokemonCategory.Favorite,
+    filter: {
+      isFavorite: selectedCategory === PokemonCategory.Favorite,
+    },
+    search,
   });
 
   const changeCategory = useCallback((category) => {
@@ -38,6 +43,14 @@ export default function PokemonsPage(): JSX.Element {
           <FavoriteFilledIcon /> Favorites
         </Switch>
       </ContentSwitcher>
+      <SearchInput
+        size="lg"
+        placeholder="Search"
+        labelText="Search"
+        closeButtonLabelText="Clear search input"
+        value={search}
+        onChange={(event) => setSearch(event.target.value)}
+      />
       <div
         style={{
           display: "flex",
