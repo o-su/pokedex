@@ -6,6 +6,7 @@ import {
   Grid,
   Sun,
   Moon,
+  VolumeUp,
 } from "@carbon/icons-react";
 
 export const CatalogIcon = Catalog;
@@ -15,3 +16,4 @@ export const ListIcon = List;
 export const GridIcon = Grid;
 export const SunIcon = Sun;
 export const MoonIcon = Moon;
+export const SoundIcon = VolumeUp;

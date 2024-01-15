@@ -38,6 +38,7 @@ npm run dev
 - pokemon detail
   - breadcrumbs
   - information from database
+  - play pokemon sound
   - evolutions
 
 ## Technologies

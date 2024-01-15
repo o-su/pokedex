@@ -18,6 +18,8 @@ import { Column } from "@/app/common/components/layout/column";
 import { PokemonImage } from "@/app/common/components/pokemonImage";
 import { Center } from "@/app/common/components/layout/center";
 import { usePokemonsFavorite } from "@/app/common/api/pokemonsFavoriteApi";
+import { SoundIcon } from "@/app/common/components/icon";
+import { getNativeApi } from "@/app/common/services/nativeApi";
 
 export default function PokemonPage(): JSX.Element {
   const { name } = useParams();
@@ -39,12 +41,21 @@ export default function PokemonPage(): JSX.Element {
 
             <Grid condensed style={{ paddingInline: 0, width: "100%" }}>
               <Column span={8} sm={16} md={8} lg={8}>
-                <div style={{ float: "left" }}>
+                <div style={{ float: "left", position: "relative" }}>
                   <PokemonImage
                     src={pokemon.image}
                     size={280}
                     alt={pokemon.name}
                     padding={10}
+                  />
+                  <SoundIcon
+                    onClick={() => getNativeApi().playAudio(pokemon.sound)}
+                    style={{
+                      position: "absolute",
+                      bottom: 10,
+                      left: 10,
+                      cursor: "pointer",
+                    }}
                   />
                 </div>
               </Column>

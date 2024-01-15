@@ -24,6 +24,7 @@ export const pokemonQuery = gql(`
         image
         isFavorite
       }
+      sound
     }
   }
 `);
