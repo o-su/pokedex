@@ -21,6 +21,7 @@ npm run dev
 
 ## Features
 
+- responsive, mobile-first design
 - top menu
   - logo - go to homepage link
   - light / dark theme switch

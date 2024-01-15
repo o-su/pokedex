@@ -18,7 +18,7 @@ export function PokemonLayout({
         display: "flex",
         flexDirection: layout === Layout.Grid ? "row" : "column",
         flexWrap: "wrap",
-        gap: "5px 5px",
+        gap: "10px 10px",
         width: "100%",
         justifyContent: align || "center",
       }}
