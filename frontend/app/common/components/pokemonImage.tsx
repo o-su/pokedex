@@ -24,6 +24,8 @@ export function PokemonImage({
         padding,
         background: Color.White,
         filter: theme === ThemeId.Dark ? "brightness(70%)" : undefined,
+        borderTopLeftRadius: 3,
+        borderTopRightRadius: 3,
       }}
     >
       <Image src={src} width={size} height={size} alt={alt} />

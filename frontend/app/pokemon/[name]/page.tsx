@@ -1,5 +1,4 @@
 "use client";
-import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 
@@ -16,11 +15,13 @@ import { PokemonLayout } from "@/app/common/components/layout/pokemonLayout";
 import { Layout } from "@/app/common/types/layoutTypes";
 import { Grid } from "@/app/common/components/layout/grid";
 import { Column } from "@/app/common/components/layout/column";
-import { Color } from "@/app/common/constants/colorConstants";
 import { PokemonImage } from "@/app/common/components/pokemonImage";
+import { Center } from "@/app/common/components/layout/center";
+import { usePokemonsFavorite } from "@/app/common/api/pokemonsFavoriteApi";
 
 export default function PokemonPage(): JSX.Element {
   const { name } = useParams();
+  const { togglePokemonFavorite } = usePokemonsFavorite();
   const { data } = usePokemon(name as string);
   const pokemon = data?.pokemonByName;
 
@@ -36,8 +37,8 @@ export default function PokemonPage(): JSX.Element {
               <BreadcrumbItem isCurrentPage>{pokemon.name}</BreadcrumbItem>
             </Breadcrumb>
 
-            <Grid condensed style={{ paddingInline: 0 }}>
-              <Column span={16} sm={16} md={8}>
+            <Grid condensed style={{ paddingInline: 0, width: "100%" }}>
+              <Column span={8} sm={16} md={8} lg={8}>
                 <div style={{ float: "left" }}>
                   <PokemonImage
                     src={pokemon.image}
@@ -47,7 +48,7 @@ export default function PokemonPage(): JSX.Element {
                   />
                 </div>
               </Column>
-              <Column span={16} sm={16} md={8}>
+              <Column span={8} sm={16} md={8} lg={8}>
                 <StackLayout size={5}>
                   <h1>{name}</h1>
                   {pokemon.types}
@@ -59,12 +60,25 @@ export default function PokemonPage(): JSX.Element {
                     helperText={`HP: ${pokemon.maxHP}`}
                     value={pokemon.maxHP / 100}
                   />
-                  <div>
-                    Weight {pokemon.weight.minimum} - {pokemon.weight.maximum}
-                  </div>
-                  <div>
-                    Height {pokemon.height.minimum} - {pokemon.height.maximum}
-                  </div>
+
+                  <Grid condensed style={{ width: "100%" }}>
+                    <Column span={4} sm={8} md={4} lg={4}>
+                      <Center>
+                        <div style={{ fontWeight: "bold", marginBottom: 5 }}>
+                          Weight
+                        </div>
+                        {pokemon.weight.minimum} - {pokemon.weight.maximum}
+                      </Center>
+                    </Column>
+                    <Column span={4} sm={8} md={4} lg={4}>
+                      <Center>
+                        <div style={{ fontWeight: "bold", marginBottom: 5 }}>
+                          Height
+                        </div>
+                        {pokemon.height.minimum} - {pokemon.height.maximum}
+                      </Center>
+                    </Column>
+                  </Grid>
                 </StackLayout>
               </Column>
             </Grid>
@@ -79,7 +93,10 @@ export default function PokemonPage(): JSX.Element {
                     name={evolution.name}
                     image={evolution.image}
                     favorite={evolution.isFavorite}
-                    onToggleFavorite={() => undefined} // TODO: implement
+                    onToggleFavorite={(event) => {
+                      event.preventDefault();
+                      togglePokemonFavorite(evolution.id, evolution.isFavorite);
+                    }}
                   />
                 ))}
               </PokemonLayout>

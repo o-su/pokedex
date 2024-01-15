@@ -1,20 +1,12 @@
 import { useCallback } from "react";
-import { useMutation, useQuery } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 
-import { PokemonsQueryInput } from "../../gql/graphql";
 import {
   pokemonsMarkFavoriteMutation,
-  pokemonsQuery,
   pokemonsUnmarkFavoriteMutation,
 } from "../queries/pokemonsQueries";
 
-export function usePokemons(query: PokemonsQueryInput) {
-  const result = useQuery(pokemonsQuery, {
-    variables: {
-      query,
-    },
-  });
-
+export function usePokemonsFavorite() {
   const [
     markAsFavorite,
     { loading: markAsFavoriteLoading, error: markAsFavoriteError },
@@ -51,7 +43,6 @@ export function usePokemons(query: PokemonsQueryInput) {
   );
 
   return {
-    ...result,
     favoriteLoading: markAsFavoriteLoading || unmarkAsFavoriteLoading,
     markPokemonAsFavorite,
     unmarkPokemonAsFavorite,

@@ -6,6 +6,7 @@ import {
   ListIcon,
 } from "@/app/common/components/icon";
 import { IconSwitch } from "@/app/common/components/iconSwitch";
+import { Padding } from "@/app/common/components/layout/padding";
 import { SearchInput } from "@/app/common/components/searchInput";
 import { Select } from "@/app/common/components/select";
 import { Switch } from "@/app/common/components/switch";
@@ -36,7 +37,7 @@ export function PokemonsFilter({
   changeLayout,
 }: PokemonsFilterProps): JSX.Element {
   return (
-    <div>
+    <Padding top={5}>
       <ContentSwitcher
         onChange={(newCategory) => changeCategory(newCategory.name)}
       >
@@ -54,7 +55,7 @@ export function PokemonsFilter({
         </Switch>
       </ContentSwitcher>
 
-      <div style={{ display: "flex" }}>
+      <div style={{ display: "flex", marginTop: 5 }}>
         <Select
           id="pokemon-type"
           items={pokemonTypes}
@@ -93,6 +94,6 @@ export function PokemonsFilter({
           </ContentSwitcher>
         </div>
       </div>
-    </div>
+    </Padding>
   );
 }
