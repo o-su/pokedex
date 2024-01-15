@@ -8,7 +8,7 @@ export function Container({ children }: PropsWithChildren<{}>): JSX.Element {
         width: "100%",
         maxWidth: maxContentWidth,
         margin: "auto",
-        padding: 5,
+        padding: "0px 5px",
       }}
     >
       {children}
