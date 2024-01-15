@@ -9,10 +9,10 @@ import { Route } from "../constants/routeConstants";
 import { MoonIcon, SunIcon } from "./icon";
 import { Container } from "./layout/container";
 import { Logo } from "./logo";
-import { useAppState } from "../hooks/appStateHook";
+import { useTheme } from "../hooks/themeHook";
 
 export function AppHeader(): JSX.Element {
-  const { theme, toggleTheme } = useAppState();
+  const { theme, toggleTheme } = useTheme();
 
   return (
     <div style={headerStyle}>

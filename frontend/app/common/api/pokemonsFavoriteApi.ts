@@ -5,30 +5,54 @@ import {
   pokemonsMarkFavoriteMutation,
   pokemonsUnmarkFavoriteMutation,
 } from "../queries/pokemonsQueries";
+import { useNotifications } from "../hooks/notificationsHook";
+import { title } from "process";
 
 export function usePokemonsFavorite() {
-  const [
-    markAsFavorite,
-    { loading: markAsFavoriteLoading, error: markAsFavoriteError },
-  ] = useMutation(pokemonsMarkFavoriteMutation);
+  const { addNotification } = useNotifications();
 
-  const [
-    unmarkAsFavorite,
-    { loading: unmarkAsFavoriteLoading, error: unmarkAsFavoriteError },
-  ] = useMutation(pokemonsUnmarkFavoriteMutation);
+  const [markAsFavorite, { loading: markAsFavoriteLoading }] = useMutation(
+    pokemonsMarkFavoriteMutation
+  );
+
+  const [unmarkAsFavorite, { loading: unmarkAsFavoriteLoading }] = useMutation(
+    pokemonsUnmarkFavoriteMutation
+  );
 
   const markPokemonAsFavorite = useCallback(
-    (pokemonId: string) => {
-      markAsFavorite({ variables: { id: pokemonId } });
+    async (pokemonId: string) => {
+      try {
+        await markAsFavorite({ variables: { id: pokemonId } });
+        addNotification({
+          kind: "success",
+          message: "Marked pokemon as favorite",
+        });
+      } catch {
+        addNotification({
+          kind: "error",
+          message: "Failed to mark pokemon as favorite",
+        });
+      }
     },
-    [markAsFavorite]
+    [markAsFavorite, addNotification]
   );
 
   const unmarkPokemonAsFavorite = useCallback(
-    (pokemonId: string) => {
-      unmarkAsFavorite({ variables: { id: pokemonId } });
+    async (pokemonId: string) => {
+      try {
+        await unmarkAsFavorite({ variables: { id: pokemonId } });
+        addNotification({
+          kind: "success",
+          message: "Unmarked pokemon as favorite",
+        });
+      } catch {
+        addNotification({
+          kind: "error",
+          message: "Failed to unmark pokemon as favorite",
+        });
+      }
     },
-    [unmarkAsFavorite]
+    [unmarkAsFavorite, addNotification]
   );
 
   const togglePokemonFavorite = useCallback(

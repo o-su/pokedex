@@ -2,7 +2,7 @@ import { useCallback, useContext } from "react";
 
 import { AppStateActionType, AppStateContext, ThemeId } from "@/app/appState";
 
-export function useAppState() {
+export function useTheme() {
   const { state, dispatch } = useContext(AppStateContext);
   const theme = state.theme;
 

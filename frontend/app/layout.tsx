@@ -7,6 +7,7 @@ import "@carbon/react/scss/_zone.scss";
 
 import "./globals.css";
 import { Providers } from "./providers";
+import { Notifications } from "./notifications";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,6 +30,7 @@ export default function RootLayout({
       <body className={inter.className} style={{ height: "100%" }}>
         <Providers>
           <AppLayout header={<AppHeader />}>{children}</AppLayout>
+          <Notifications />
         </Providers>
       </body>
     </html>

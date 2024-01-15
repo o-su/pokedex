@@ -1,5 +1,6 @@
 "use client";
 import { PropsWithChildren, createContext, Dispatch, useReducer } from "react";
+import { NotificationData } from "./common/types/notificationTypes";
 
 export enum ThemeId {
   Dark = "g100",
@@ -8,19 +9,32 @@ export enum ThemeId {
 
 export type AppState = {
   theme: ThemeId;
+  notifications: NotificationData[];
 };
 
 export enum AppStateActionType {
   SetTheme = "SetTheme",
+  AddNotification = "AddNotification",
+  DeleteNotification = "DeleteNotification",
 }
 
-export type AppStateAction = {
-  type: AppStateActionType.SetTheme;
-  theme: ThemeId;
-};
+export type AppStateAction =
+  | {
+      type: AppStateActionType.SetTheme;
+      theme: ThemeId;
+    }
+  | {
+      type: AppStateActionType.AddNotification;
+      notification: NotificationData;
+    }
+  | {
+      type: AppStateActionType.DeleteNotification;
+      notificationId: string;
+    };
 
 const initialState: AppState = {
   theme: ThemeId.Light,
+  notifications: [],
 };
 
 const reducer = (state: AppState, action: AppStateAction): AppState => {
@@ -29,6 +43,18 @@ const reducer = (state: AppState, action: AppStateAction): AppState => {
       return {
         ...state,
         theme: action.theme,
+      };
+    case AppStateActionType.AddNotification:
+      return {
+        ...state,
+        notifications: [...state.notifications, action.notification],
+      };
+    case AppStateActionType.DeleteNotification:
+      return {
+        ...state,
+        notifications: state.notifications.filter(
+          (notification) => notification.id !== action.notificationId
+        ),
       };
     default:
       return state;

@@ -3,10 +3,10 @@
 import { PropsWithChildren } from "react";
 import { Theme } from "@carbon/react";
 
-import { useAppState } from "./common/hooks/appStateHook";
+import { useTheme } from "./common/hooks/themeHook";
 
 export function ThemeProvider({ children }: PropsWithChildren<{}>) {
-  const { theme } = useAppState();
+  const { theme } = useTheme();
 
   return (
     <Theme theme={theme} style={{ height: "100%" }}>
