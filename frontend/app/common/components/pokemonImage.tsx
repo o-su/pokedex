@@ -1,6 +1,7 @@
 import { ThemeId } from "@/app/appState";
 import { useTheme } from "@carbon/react";
 import Image from "next/image";
+
 import { Color } from "../constants/colorConstants";
 
 export type PokemonImageProps = {

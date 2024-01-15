@@ -39,6 +39,8 @@ export function PokemonsFilter({
   return (
     <Padding top={5}>
       <ContentSwitcher
+        size="md"
+        selectedIndex={0}
         onChange={(newCategory) => changeCategory(newCategory.name)}
       >
         <Switch
@@ -56,15 +58,17 @@ export function PokemonsFilter({
       </ContentSwitcher>
 
       <div style={{ display: "flex", marginTop: 5 }}>
-        <Select
-          id="pokemon-type"
-          items={pokemonTypes}
-          placeholder="Select Type"
-          value={pokemonType}
-          allowCustomValue={false}
-          selectedItem={pokemonType}
-          onChange={({ selectedItem }: any) => setPokemonType(selectedItem)}
-        />
+        {pokemonTypes && (
+          <Select
+            id="pokemon-type"
+            items={pokemonTypes}
+            placeholder="Select Type"
+            value={pokemonType}
+            allowCustomValue={false}
+            selectedItem={pokemonType}
+            onChange={({ selectedItem }: any) => setPokemonType(selectedItem)}
+          />
+        )}
 
         <SearchInput
           placeholder="Search"
@@ -75,6 +79,8 @@ export function PokemonsFilter({
         />
         <div>
           <ContentSwitcher
+            size="md"
+            selectedIndex={0}
             onChange={(newLayout) => changeLayout(newLayout.name)}
           >
             <IconSwitch

@@ -1,11 +1,11 @@
 "use client";
 import { MouseEvent, ReactSVGElement } from "react";
 import { useTheme } from "@carbon/react";
+import Link from "next/link";
 
 import { FavoriteFilledIcon, FavoriteIcon } from "@/app/common/components/icon";
 import { Color } from "@/app/common/constants/colorConstants";
 import { ThemeId } from "@/app/appState";
-import Link from "next/link";
 import { Route } from "../constants/routeConstants";
 import { PokemonImage } from "./pokemonImage";
 
