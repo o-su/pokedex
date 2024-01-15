@@ -1,12 +1,12 @@
-import { useMutation, useQuery } from "@apollo/client";
 import { useCallback } from "react";
-import { PokemonsQueryInput } from "../gql/graphql";
+import { useMutation, useQuery } from "@apollo/client";
 
+import { PokemonsQueryInput } from "../../gql/graphql";
 import {
   pokemonsMarkFavoriteMutation,
   pokemonsQuery,
   pokemonsUnmarkFavoriteMutation,
-} from "./pokemonsQueries";
+} from "../queries/pokemonsQueries";
 
 export function usePokemons(query: PokemonsQueryInput) {
   const result = useQuery(pokemonsQuery, {

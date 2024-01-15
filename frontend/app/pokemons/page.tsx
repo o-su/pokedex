@@ -1,26 +1,15 @@
 "use client";
-import { useCallback, useState } from "react";
-import Link from "next/link";
+import { useState } from "react";
 
-import { ContentSwitcher } from "../common/components/contentSwitcher";
-import {
-  CatalogIcon,
-  FavoriteFilledIcon,
-  GridIcon,
-  ListIcon,
-} from "../common/components/icon";
-import { Switch } from "../common/components/switch";
 import { PokemonCategory } from "./pokemonsTypes";
 import { PokemonCard } from "../common/components/pokemonCard";
-import { usePokemons } from "./pokemonsApi";
+import { usePokemons } from "../common/api/pokemonsApi";
 import { Container } from "../common/components/layout/container";
-import { SearchInput } from "../common/components/searchInput";
-import { Select } from "../common/components/select";
 import { usePokemonTypes } from "./pokemonTypesApi";
 import { Layout } from "../common/types/layoutTypes";
-import { Route } from "../common/constants/routeConstants";
 import { Padding } from "../common/components/layout/padding";
 import { PokemonsFilter } from "./parts/pokemonsFilter";
+import { PokemonLayout } from "../common/components/layout/pokemonLayout";
 
 export default function PokemonsPage(): JSX.Element {
   const [selectedCategory, setSelectedCategory] = useState<PokemonCategory>(
@@ -53,35 +42,22 @@ export default function PokemonsPage(): JSX.Element {
       />
 
       <Padding top={5} bottom={5}>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: layout === Layout.Grid ? "row" : "column",
-            flexWrap: "wrap",
-            gap: "5px 5px",
-            width: "100%",
-            justifyContent: "center",
-          }}
-        >
+        <PokemonLayout layout={layout}>
           {data?.pokemons.edges.map((pokemon) => (
-            <Link
-              href={Route.Pokemon + encodeURIComponent(pokemon.name)}
+            <PokemonCard
+              name={pokemon.name}
               key={pokemon.id}
-            >
-              <PokemonCard
-                name={pokemon.name}
-                image={pokemon.image}
-                types={pokemon.types}
-                favorite={pokemon.isFavorite}
-                condensed={layout === Layout.List}
-                onToggleFavorite={(event) => {
-                  event.preventDefault();
-                  togglePokemonFavorite(pokemon.id, pokemon.isFavorite);
-                }}
-              />
-            </Link>
+              image={pokemon.image}
+              types={pokemon.types}
+              favorite={pokemon.isFavorite}
+              condensed={layout === Layout.List}
+              onToggleFavorite={(event) => {
+                event.preventDefault();
+                togglePokemonFavorite(pokemon.id, pokemon.isFavorite);
+              }}
+            />
           ))}
-        </div>
+        </PokemonLayout>
       </Padding>
     </Container>
   );

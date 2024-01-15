@@ -1,4 +1,4 @@
-import { gql } from "../gql";
+import { gql } from "../../gql";
 
 export const pokemonsQuery = gql(`
   query pokemons($query: PokemonsQueryInput!) {

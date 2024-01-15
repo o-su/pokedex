@@ -6,6 +6,8 @@ import { useTheme } from "@carbon/react";
 import { FavoriteFilledIcon, FavoriteIcon } from "@/app/common/components/icon";
 import { Color } from "@/app/common/constants/colorConstants";
 import { ThemeId } from "@/app/appState";
+import Link from "next/link";
+import { Route } from "../constants/routeConstants";
 
 export type PokemonCardProps = {
   name: string;
@@ -29,39 +31,41 @@ export function PokemonCard({
   const imageSize = condensed ? 50 : 120;
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: condensed ? "row" : "column",
-        border: `1px solid ${Color.PhilippineGray}`,
-        borderRadius: 3,
-        background:
-          theme === ThemeId.Light ? Color.BrightGray : Color.PhilippineGray,
-      }}
-    >
+    <Link href={Route.Pokemon + encodeURIComponent(name)}>
       <div
         style={{
-          padding: condensed ? 5 : "30px 10px",
-          background: Color.White,
-          filter: theme === ThemeId.Dark ? "brightness(70%)" : undefined,
+          display: "flex",
+          flexDirection: condensed ? "row" : "column",
+          border: `1px solid ${Color.PhilippineGray}`,
+          borderRadius: 3,
+          background:
+            theme === ThemeId.Light ? Color.BrightGray : Color.PhilippineGray,
         }}
       >
-        <Image src={image} width={imageSize} height={imageSize} alt={name} />
-      </div>
-
-      <div style={{ padding: 5, width: "100%" }}>
-        <div style={{ float: "left" }}>
-          <div style={{ fontWeight: "bold" }}>{name}</div>
-          {types && <div style={{ fontSize: 15 }}>{types.join(", ")}</div>}
+        <div
+          style={{
+            padding: condensed ? 5 : "30px 10px",
+            background: Color.White,
+            filter: theme === ThemeId.Dark ? "brightness(70%)" : undefined,
+          }}
+        >
+          <Image src={image} width={imageSize} height={imageSize} alt={name} />
         </div>
 
-        <FavoriteActiveIcon
-          style={{ float: "right", cursor: "pointer" }}
-          color={Color.Red}
-          size={20}
-          onClick={onToggleFavorite}
-        />
+        <div style={{ padding: 5, width: "100%" }}>
+          <div style={{ float: "left" }}>
+            <div style={{ fontWeight: "bold" }}>{name}</div>
+            {types && <div style={{ fontSize: 15 }}>{types.join(", ")}</div>}
+          </div>
+
+          <FavoriteActiveIcon
+            style={{ float: "right", cursor: "pointer" }}
+            color={Color.Red}
+            size={20}
+            onClick={onToggleFavorite}
+          />
+        </div>
       </div>
-    </div>
+    </Link>
   );
 }

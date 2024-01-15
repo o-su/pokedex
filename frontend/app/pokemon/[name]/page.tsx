@@ -14,6 +14,8 @@ import { useParams } from "next/navigation";
 import { usePokemon } from "./pokemonApi";
 import { Route } from "@/app/common/constants/routeConstants";
 import { Padding } from "@/app/common/components/layout/padding";
+import { PokemonLayout } from "@/app/common/components/layout/pokemonLayout";
+import { Layout } from "@/app/common/types/layoutTypes";
 
 export default function PokemonPage(): JSX.Element {
   const { name } = useParams();
@@ -58,15 +60,17 @@ export default function PokemonPage(): JSX.Element {
             </div>
             <div>
               Evolutions
-              {pokemon.evolutions.map((evolution) => (
-                <PokemonCard
-                  key={evolution.id}
-                  name={evolution.name}
-                  image={evolution.image}
-                  favorite={evolution.isFavorite}
-                  onToggleFavorite={() => undefined} // TODO: implement
-                />
-              ))}
+              <PokemonLayout layout={Layout.Grid} align="left">
+                {pokemon.evolutions.map((evolution) => (
+                  <PokemonCard
+                    key={evolution.id}
+                    name={evolution.name}
+                    image={evolution.image}
+                    favorite={evolution.isFavorite}
+                    onToggleFavorite={() => undefined} // TODO: implement
+                  />
+                ))}
+              </PokemonLayout>
             </div>
           </StackLayout>
         </Padding>
