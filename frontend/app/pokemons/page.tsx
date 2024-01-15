@@ -40,49 +40,48 @@ export default function PokemonsPage(): JSX.Element {
 
   return (
     <Container>
-      <Padding top={10}>
-        <PokemonsFilter
-          selectedCategory={selectedCategory}
-          pokemonTypes={pokemonTypesData?.pokemonTypes}
-          pokemonType={pokemonType}
-          search={search}
-          layout={layout}
-          changeCategory={setSelectedCategory}
-          setPokemonType={setPokemonType}
-          setSearch={setSearch}
-          changeLayout={setLayout}
-        />
+      <PokemonsFilter
+        selectedCategory={selectedCategory}
+        pokemonTypes={pokemonTypesData?.pokemonTypes}
+        pokemonType={pokemonType}
+        search={search}
+        layout={layout}
+        changeCategory={setSelectedCategory}
+        setPokemonType={setPokemonType}
+        setSearch={setSearch}
+        changeLayout={setLayout}
+      />
 
-        <Padding top={10} bottom={10}>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: layout === Layout.Grid ? "row" : "column",
-              flexWrap: "wrap",
-              gap: "5px 5px",
-              width: "100%",
-              justifyContent: "center",
-            }}
-          >
-            {data?.pokemons.edges.map((pokemon) => (
-              <Link
-                href={Route.Pokemon + encodeURIComponent(pokemon.name)}
-                key={pokemon.id}
-              >
-                <PokemonCard
-                  name={pokemon.name}
-                  image={pokemon.image}
-                  types={pokemon.types}
-                  favorite={pokemon.isFavorite}
-                  onToggleFavorite={(event) => {
-                    event.preventDefault();
-                    togglePokemonFavorite(pokemon.id, pokemon.isFavorite);
-                  }}
-                />
-              </Link>
-            ))}
-          </div>
-        </Padding>
+      <Padding top={5} bottom={5}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: layout === Layout.Grid ? "row" : "column",
+            flexWrap: "wrap",
+            gap: "5px 5px",
+            width: "100%",
+            justifyContent: "center",
+          }}
+        >
+          {data?.pokemons.edges.map((pokemon) => (
+            <Link
+              href={Route.Pokemon + encodeURIComponent(pokemon.name)}
+              key={pokemon.id}
+            >
+              <PokemonCard
+                name={pokemon.name}
+                image={pokemon.image}
+                types={pokemon.types}
+                favorite={pokemon.isFavorite}
+                condensed={layout === Layout.List}
+                onToggleFavorite={(event) => {
+                  event.preventDefault();
+                  togglePokemonFavorite(pokemon.id, pokemon.isFavorite);
+                }}
+              />
+            </Link>
+          ))}
+        </div>
       </Padding>
     </Container>
   );
