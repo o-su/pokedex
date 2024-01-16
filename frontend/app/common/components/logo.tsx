@@ -6,5 +6,13 @@ export type LogoProps = {
 };
 
 export function Logo({ width, height }: LogoProps): JSX.Element {
-  return <Image src="/logo.svg" width={width} height={height} alt="logo" />;
+  return (
+    <Image
+      src="/logo.svg"
+      width={width}
+      height={height}
+      className="logo"
+      alt="logo"
+    />
+  );
 }

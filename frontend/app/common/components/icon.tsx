@@ -7,6 +7,7 @@ import {
   Sun,
   Moon,
   VolumeUp,
+  Bat,
 } from "@carbon/icons-react";
 
 export const CatalogIcon = Catalog;
@@ -17,3 +18,4 @@ export const GridIcon = Grid;
 export const SunIcon = Sun;
 export const MoonIcon = Moon;
 export const SoundIcon = VolumeUp;
+export const PokemonIcon = Bat;
