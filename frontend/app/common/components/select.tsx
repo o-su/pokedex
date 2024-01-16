@@ -26,11 +26,6 @@ export type ComboBoxProps<ItemType> = Omit<
    */
   ["aria-label"]?: string;
   /**
-   * @deprecated please use `aria-label` instead.
-   * 'aria-label' of the ListBox component.
-   */
-  ariaLabel?: string;
-  /**
    * An optional className to add to the container node
    */
   className?: string;
@@ -84,11 +79,6 @@ export type ComboBoxProps<ItemType> = Omit<
    * in a collection of whatever kind of data structure they prefer
    */
   items: ItemType[];
-  /**
-   * @deprecated
-   * should use "light theme" (white background)?
-   */
-  light?: boolean;
   /**
      * `onChange` is a utility for this controlled component to communicate to a
      * consuming component when a specific dropdown item is selected.

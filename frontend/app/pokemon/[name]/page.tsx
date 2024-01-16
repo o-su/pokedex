@@ -20,6 +20,8 @@ import { Center } from "@/app/common/components/layout/center";
 import { usePokemonsFavorite } from "@/app/common/api/pokemonsFavoriteApi";
 import { SoundIcon } from "@/app/common/components/icon";
 import { getNativeApi } from "@/app/common/services/nativeApi";
+import { NoContent } from "@/app/common/components/noContent";
+import { InlineLoader } from "@/app/common/components/inlineLoader";
 
 export default function PokemonPage(): JSX.Element {
   const { name } = useParams();
@@ -99,26 +101,41 @@ export default function PokemonPage(): JSX.Element {
             <div>
               <h2>Evolutions</h2>
 
-              <PokemonLayout layout={Layout.Grid} align="left">
-                {pokemon.evolutions.map((evolution) => (
-                  <PokemonCard
-                    key={evolution.id}
-                    name={evolution.name}
-                    image={evolution.image}
-                    favorite={evolution.isFavorite}
-                    onToggleFavorite={(event) => {
-                      event.preventDefault();
-                      togglePokemonFavorite(evolution.id, evolution.isFavorite);
-                    }}
-                  />
-                ))}
-              </PokemonLayout>
+              {pokemon.evolutions.length > 0 ? (
+                <PokemonLayout layout={Layout.Grid} align="left">
+                  {pokemon.evolutions.map((evolution) => (
+                    <PokemonCard
+                      key={evolution.id}
+                      name={evolution.name}
+                      image={evolution.image}
+                      favorite={evolution.isFavorite}
+                      onToggleFavorite={(event) => {
+                        event.preventDefault();
+                        togglePokemonFavorite(
+                          evolution.id,
+                          evolution.isFavorite
+                        );
+                      }}
+                    />
+                  ))}
+                </PokemonLayout>
+              ) : (
+                <Padding top={10}>
+                  <NoContent align="left">
+                    This Pokémon has no higher evolutionary stages.
+                  </NoContent>
+                </Padding>
+              )}
             </div>
           </StackLayout>
         </Padding>
       </Container>
     );
   } else {
-    return <div>Loading</div>;
+    return (
+      <Padding top={10}>
+        <InlineLoader />
+      </Padding>
+    );
   }
 }
