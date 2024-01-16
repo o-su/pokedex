@@ -1,6 +1,9 @@
 import { CSSProperties, PropsWithChildren, ReactNode } from "react";
 
-import { appHeaderHeight } from "../../constants/layoutConstants";
+import {
+  appHeaderHeight,
+  mainContentId,
+} from "../../constants/layoutConstants";
 
 export type AppLayoutProps = PropsWithChildren<{
   header: ReactNode;
@@ -10,7 +13,9 @@ export function AppLayout({ header, children }: AppLayoutProps): JSX.Element {
   return (
     <div style={appStyle}>
       <div style={headerWrapperStyle}>{header}</div>
-      <div style={mainContentWrapperStyle}>{children}</div>
+      <div style={mainContentWrapperStyle} id={mainContentId}>
+        {children}
+      </div>
     </div>
   );
 }

@@ -1,5 +1,5 @@
 "use client";
-import { useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { PokemonCategory } from "./pokemonsTypes";
 import { Container } from "../common/components/layout/container";
@@ -9,6 +9,7 @@ import { Padding } from "../common/components/layout/padding";
 import { PokemonsFilter } from "./parts/pokemonsFilter";
 import { PokemonsContent } from "./parts/pokemonsContent";
 import { usePokemons } from "./pokemonsApi";
+import { mainContentId } from "../common/constants/layoutConstants";
 
 const pokemonsPerPage = 20;
 
@@ -35,6 +36,36 @@ export default function PokemonsPage(): JSX.Element {
   );
   const { data, loadMorePokemons } = usePokemons(query);
 
+  const loadMore = useCallback(
+    (page: number, scrollArea: HTMLDivElement | null) => {
+      if (
+        scrollArea &&
+        scrollArea.scrollTop ===
+          scrollArea.scrollHeight - scrollArea.offsetHeight
+      ) {
+        const newPage = page + 1;
+
+        setPage(newPage);
+        loadMorePokemons({
+          ...query,
+          offset: newPage * pokemonsPerPage,
+        });
+      }
+    },
+    [query, loadMorePokemons]
+  );
+
+  useEffect(() => {
+    const mainContent = document.getElementById(
+      mainContentId
+    ) as HTMLDivElement | null;
+    const loadMoreCallback = () => loadMore(page, mainContent);
+
+    mainContent?.addEventListener("scroll", loadMoreCallback);
+
+    return () => mainContent?.removeEventListener("scroll", loadMoreCallback);
+  }, [page]);
+
   return (
     <Container>
       <PokemonsFilter
@@ -51,18 +82,6 @@ export default function PokemonsPage(): JSX.Element {
 
       <Padding top={10} bottom={5}>
         <PokemonsContent layout={layout} data={data} />
-        <div
-          onClick={() => {
-            const newPage = page + 1;
-            setPage(newPage);
-            loadMorePokemons({
-              ...query,
-              offset: newPage * pokemonsPerPage,
-            });
-          }}
-        >
-          Load more
-        </div>
       </Padding>
     </Container>
   );

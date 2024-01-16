@@ -33,7 +33,7 @@ export default function HomePage(): JSX.Element {
             species, their habitats, and evolution paths with this essential
             electronic device. Unleash your inner Pokémon Trainer and embark on
             an exciting journey by getting your own Pokédex today. Gotta catch
-            'em all!
+            &apos;em all!
           </p>
 
           <div>

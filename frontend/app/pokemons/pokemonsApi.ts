@@ -11,20 +11,23 @@ export function usePokemons(query: PokemonsQueryInput) {
     },
   });
 
-  const loadMorePokemons = useCallback((newQuery: PokemonsQueryInput) => {
-    result.fetchMore({
-      variables: { query: newQuery },
-      updateQuery: (previousResult, { fetchMoreResult }) => {
-        const newEntries = fetchMoreResult.pokemons.edges;
+  const loadMorePokemons = useCallback(
+    (newQuery: PokemonsQueryInput) => {
+      result.fetchMore({
+        variables: { query: newQuery },
+        updateQuery: (previousResult, { fetchMoreResult }) => {
+          const newEntries = fetchMoreResult.pokemons.edges;
 
-        return {
-          pokemons: {
-            edges: [...previousResult.pokemons.edges, ...newEntries],
-          },
-        };
-      },
-    });
-  }, []);
+          return {
+            pokemons: {
+              edges: [...previousResult.pokemons.edges, ...newEntries],
+            },
+          };
+        },
+      });
+    },
+    [result]
+  );
 
   return { ...result, loadMorePokemons };
 }
