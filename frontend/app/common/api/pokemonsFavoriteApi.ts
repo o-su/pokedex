@@ -6,7 +6,6 @@ import {
   pokemonsUnmarkFavoriteMutation,
 } from "../queries/pokemonsQueries";
 import { useNotifications } from "../hooks/notificationsHook";
-import { title } from "process";
 
 export function usePokemonsFavorite() {
   const { addNotification } = useNotifications();

@@ -41,7 +41,9 @@ export function PokemonsFilter({
       <ContentSwitcher
         size="md"
         selectedIndex={0}
-        onChange={(newCategory) => changeCategory(newCategory.name)}
+        onChange={(newCategory) =>
+          changeCategory(newCategory.name as PokemonCategory)
+        }
       >
         <Switch
           name={PokemonCategory.All}
@@ -66,7 +68,9 @@ export function PokemonsFilter({
             value={pokemonType}
             allowCustomValue={false}
             selectedItem={pokemonType}
-            onChange={({ selectedItem }: any) => setPokemonType(selectedItem)}
+            onChange={({ selectedItem }) =>
+              selectedItem && setPokemonType(selectedItem)
+            }
           />
         )}
 
@@ -81,7 +85,7 @@ export function PokemonsFilter({
           <ContentSwitcher
             size="md"
             selectedIndex={0}
-            onChange={(newLayout) => changeLayout(newLayout.name)}
+            onChange={(newLayout) => changeLayout(newLayout.name as Layout)}
           >
             <IconSwitch
               name={Layout.Grid}

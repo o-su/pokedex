@@ -1,7 +1,8 @@
 import { PropsWithChildren } from "react";
+
 import { maxContentWidth } from "../../constants/layoutConstants";
 
-export function Container({ children }: PropsWithChildren<{}>): JSX.Element {
+export function Container({ children }: PropsWithChildren): JSX.Element {
   return (
     <div
       style={{

@@ -72,7 +72,7 @@ export const AppStateContext = createContext<{
 
 AppStateContext.displayName = "AppState";
 
-export const AppStateProvider = (props: PropsWithChildren<{}>) => {
+export const AppStateProvider = (props: PropsWithChildren) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   return (

@@ -5,7 +5,7 @@ import { Theme } from "@carbon/react";
 
 import { useTheme } from "./common/hooks/themeHook";
 
-export function ThemeProvider({ children }: PropsWithChildren<{}>) {
+export function ThemeProvider({ children }: PropsWithChildren) {
   const { theme } = useTheme();
 
   return (

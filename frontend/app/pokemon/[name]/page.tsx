@@ -64,10 +64,12 @@ export default function PokemonPage(): JSX.Element {
                   <h1>{name}</h1>
                   {pokemon.types}
                   <ProgressBar
+                    label=""
                     helperText={`CP: ${pokemon.maxCP}`}
                     value={pokemon.maxCP / 100}
                   />
                   <ProgressBar
+                    label=""
                     helperText={`HP: ${pokemon.maxHP}`}
                     value={pokemon.maxHP / 100}
                   />
