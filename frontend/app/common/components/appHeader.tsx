@@ -30,11 +30,14 @@ export function AppHeader(): JSX.Element {
           </Link>
         </div>
         <div
+          id="theme-switch"
           style={{
             float: "right",
             cursor: "pointer",
             lineHeight: `${appHeaderHeight}px`,
             color: Color.White,
+            paddingLeft: 10,
+            paddingRight: 10,
           }}
           onClick={toggleTheme}
         >
