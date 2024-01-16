@@ -15,7 +15,7 @@ export function AppHeader(): JSX.Element {
   const { theme, toggleTheme } = useTheme();
 
   return (
-    <div style={headerStyle}>
+    <div style={getHeaderStyle(theme)}>
       <Container>
         <div
           style={{
@@ -48,8 +48,10 @@ export function AppHeader(): JSX.Element {
   );
 }
 
-const headerStyle: CSSProperties = {
-  width: "100%",
-  height: appHeaderHeight,
-  background: Color.DarkGunmetal,
-};
+function getHeaderStyle(theme: ThemeId): CSSProperties {
+  return {
+    width: "100%",
+    height: appHeaderHeight,
+    background: theme === ThemeId.Dark ? Color.SmokyBlack : Color.ChineseBlack,
+  };
+}

@@ -5,7 +5,6 @@ import {
   GridIcon,
   ListIcon,
 } from "@/app/common/components/icon";
-import { IconSwitch } from "@/app/common/components/iconSwitch";
 import { Padding } from "@/app/common/components/layout/padding";
 import { SearchInput } from "@/app/common/components/searchInput";
 import { Select } from "@/app/common/components/select";
@@ -49,13 +48,14 @@ export function PokemonsFilter({
           name={PokemonCategory.All}
           selected={selectedCategory === PokemonCategory.All}
         >
-          <CatalogIcon /> All
+          <CatalogIcon style={{ float: "left", marginRight: 5 }} /> All
         </Switch>
         <Switch
           name={PokemonCategory.Favorite}
           selected={selectedCategory === PokemonCategory.Favorite}
         >
-          <FavoriteFilledIcon /> Favorites
+          <FavoriteFilledIcon style={{ float: "left", marginRight: 5 }} />{" "}
+          Favorites
         </Switch>
       </ContentSwitcher>
 
@@ -87,20 +87,12 @@ export function PokemonsFilter({
             selectedIndex={0}
             onChange={(newLayout) => changeLayout(newLayout.name as Layout)}
           >
-            <IconSwitch
-              name={Layout.Grid}
-              selected={layout === Layout.Grid}
-              text="Grid"
-            >
-              <GridIcon />
-            </IconSwitch>
-            <IconSwitch
-              name={Layout.List}
-              selected={layout === Layout.List}
-              text="List"
-            >
-              <ListIcon />
-            </IconSwitch>
+            <Switch name={Layout.Grid} selected={layout === Layout.Grid}>
+              <GridIcon style={{ float: "left" }} />
+            </Switch>
+            <Switch name={Layout.List} selected={layout === Layout.List}>
+              <ListIcon style={{ float: "left" }} />
+            </Switch>
           </ContentSwitcher>
         </div>
       </div>

@@ -37,9 +37,11 @@ export default function HomePage(): JSX.Element {
           </p>
 
           <div>
-            <Button href={Route.Pokemons} size="lg" renderIcon={PokemonIcon}>
-              Catch &apos;Em All
-            </Button>
+            <Link href={Route.Pokemons}>
+              <Button size="lg" renderIcon={PokemonIcon}>
+                Catch &apos;Em All
+              </Button>
+            </Link>
           </div>
         </StackLayout>
       </div>
