@@ -2,10 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { AppHeader } from "./common/components/appHeader";
 import { AppLayout } from "./common/components/layout/appLayout";
-import "@carbon/react/index.scss";
-import "@carbon/react/scss/_zone.scss";
 
-import "./globals.css";
+import "./globals.scss";
 import { Providers } from "./providers";
 import { Notifications } from "./notifications";
 

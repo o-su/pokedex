@@ -1,3 +1,6 @@
+@use "@carbon/react/index.scss";
+@use "@carbon/react/scss/zone.scss";
+
 :root {
   --max-width: 1100px;
   --border-radius: 12px;
@@ -37,6 +40,10 @@
   --callout-border-rgb: 172, 175, 176;
   --card-rgb: 180, 185, 188;
   --card-border-rgb: 131, 134, 135;
+}
+
+.cds--g100 {
+  --cds-layer-selected-inverse: #b2b2b2;
 }
 
 * {
