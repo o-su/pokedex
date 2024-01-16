@@ -1,23 +1,20 @@
 import { usePokemonsFavorite } from "@/app/common/api/pokemonsFavoriteApi";
 import { InlineLoader } from "@/app/common/components/inlineLoader";
 import { PokemonLayout } from "@/app/common/components/layout/pokemonLayout";
-import { Loader } from "@/app/common/components/loader";
 import { NoContent } from "@/app/common/components/noContent";
 import { PokemonCard } from "@/app/common/components/pokemonCard";
 import { Layout } from "@/app/common/types/layoutTypes";
-import { PokemonsQueryInput } from "@/app/gql/graphql";
-import { usePokemons } from "../pokemonsApi";
+import { PokemonsQuery } from "@/app/gql/graphql";
 
 export type PokemonsContentProps = {
   layout: Layout;
-  query: PokemonsQueryInput;
+  data: PokemonsQuery | undefined;
 };
 
 export function PokemonsContent({
   layout,
-  query,
+  data,
 }: PokemonsContentProps): JSX.Element {
-  const { data } = usePokemons(query);
   const pokemons = data?.pokemons.edges;
   const { togglePokemonFavorite } = usePokemonsFavorite();
 

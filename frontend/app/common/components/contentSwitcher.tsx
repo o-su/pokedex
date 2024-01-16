@@ -13,13 +13,6 @@ export interface ContentSwitcherProps
    */
   className?: string;
   /**
-   * `true` to use the light version.
-   *
-   * @deprecated The `light` prop for `ContentSwitcher` has
-   *     been deprecated in favor of the new `Layer` component. It will be removed in the next major release.
-   */
-  light?: boolean;
-  /**
    * Specify an `onChange` handler that is called whenever the ContentSwitcher
    * changes which item is selected
    */
