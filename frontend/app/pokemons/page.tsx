@@ -21,6 +21,15 @@ export default function PokemonsPage(): JSX.Element {
   const [search, setSearch] = useState<string>("");
   const [pokemonType, setPokemonType] = useState<string>("");
   const { data: pokemonTypesData } = usePokemonTypes();
+  const sortedPokemonTypes = useMemo(
+    () =>
+      pokemonTypesData
+        ? [...pokemonTypesData.pokemonTypes].sort((current, next) =>
+            current.localeCompare(next)
+          )
+        : undefined,
+    [pokemonTypesData]
+  );
   const [layout, setLayout] = useState<Layout>(Layout.Grid);
   const [page, setPage] = useState<number>(0);
   const [previewOpened, setPreviewOpened] = useState<boolean>(false);
@@ -75,7 +84,7 @@ export default function PokemonsPage(): JSX.Element {
     <Container>
       <PokemonsFilter
         selectedCategory={selectedCategory}
-        pokemonTypes={pokemonTypesData?.pokemonTypes}
+        pokemonTypes={sortedPokemonTypes}
         pokemonType={pokemonType}
         search={search}
         layout={layout}
