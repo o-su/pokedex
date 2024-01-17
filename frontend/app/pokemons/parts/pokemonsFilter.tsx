@@ -12,6 +12,8 @@ import { Switch } from "@/app/common/components/switch";
 import { Layout } from "@/app/common/types/layoutTypes";
 import { PokemonCategory } from "../pokemonsTypes";
 
+export const defaultPokemonType = "All";
+
 export type PokemonsFilterProps = {
   selectedCategory: PokemonCategory;
   pokemonTypes: string[] | undefined;
@@ -63,10 +65,10 @@ export function PokemonsFilter({
         {pokemonTypes && (
           <Select
             id="pokemon-type"
-            items={pokemonTypes}
             placeholder="Select Type"
-            value={pokemonType}
             allowCustomValue={false}
+            items={[defaultPokemonType, ...pokemonTypes]}
+            initialSelectedItem={defaultPokemonType}
             selectedItem={pokemonType}
             onChange={({ selectedItem }) =>
               selectedItem && setPokemonType(selectedItem)

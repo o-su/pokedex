@@ -6,7 +6,7 @@ import { Container } from "../common/components/layout/container";
 import { usePokemonTypes } from "./pokemonTypesApi";
 import { Layout } from "../common/types/layoutTypes";
 import { Padding } from "../common/components/layout/padding";
-import { PokemonsFilter } from "./parts/pokemonsFilter";
+import { defaultPokemonType, PokemonsFilter } from "./parts/pokemonsFilter";
 import { PokemonsContent } from "./parts/pokemonsContent";
 import { usePokemons } from "./pokemonsApi";
 import { mainContentId } from "../common/constants/layoutConstants";
@@ -33,7 +33,7 @@ export default function PokemonsPage(): JSX.Element {
       offset: 0,
       filter: {
         isFavorite: selectedCategory === PokemonCategory.Favorite,
-        type: pokemonType,
+        type: pokemonType !== defaultPokemonType ? pokemonType : undefined,
       },
       search,
     }),
