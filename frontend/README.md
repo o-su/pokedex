@@ -34,7 +34,9 @@ npm run dev
     - search
   - layout selection - grid (default) / list
   - unmark / mark as favorite
+  - pokemon preview
   - link to detail
+  - infinite scroll
 - pokemon detail
   - breadcrumbs
   - information from database
@@ -46,3 +48,8 @@ npm run dev
 - Next.js (https://nextjs.org/)
 - Carbon Design System (https://carbondesignsystem.com/)
 - Apollo Client (https://www.apollographql.com/docs/react/get-started/)
+
+## Supported Browsers
+
+- Google Chrome
+- Mozilla Firefox

@@ -6,22 +6,16 @@ import { Breadcrumb } from "@/app/common/components/breadcrumb";
 import { BreadcrumbItem } from "@/app/common/components/breadcrumbItem";
 import { Container } from "@/app/common/components/layout/container";
 import { StackLayout } from "@/app/common/components/layout/stackLayout";
-import { ProgressBar } from "@/app/common/components/progressBar";
 import { PokemonCard } from "@/app/common/components/pokemonCard";
 import { usePokemon } from "./pokemonApi";
 import { Route } from "@/app/common/constants/routeConstants";
 import { Padding } from "@/app/common/components/layout/padding";
 import { PokemonLayout } from "@/app/common/components/layout/pokemonLayout";
 import { Layout } from "@/app/common/types/layoutTypes";
-import { Grid } from "@/app/common/components/layout/grid";
-import { Column } from "@/app/common/components/layout/column";
-import { PokemonImage } from "@/app/common/components/pokemonImage";
-import { Center } from "@/app/common/components/layout/center";
 import { usePokemonsFavorite } from "@/app/common/api/pokemonsFavoriteApi";
-import { SoundIcon } from "@/app/common/components/icon";
-import { getNativeApi } from "@/app/common/services/nativeApi";
 import { NoContent } from "@/app/common/components/noContent";
 import { InlineLoader } from "@/app/common/components/inlineLoader";
+import { PokemonDetail } from "@/app/common/components/pokemonDetail";
 
 export default function PokemonPage(): JSX.Element {
   const { name } = useParams();
@@ -41,62 +35,7 @@ export default function PokemonPage(): JSX.Element {
               <BreadcrumbItem isCurrentPage>{pokemon.name}</BreadcrumbItem>
             </Breadcrumb>
 
-            <Grid condensed style={{ paddingInline: 0, width: "100%" }}>
-              <Column span={8} sm={16} md={8} lg={8}>
-                <div style={{ float: "left", position: "relative" }}>
-                  <PokemonImage
-                    src={pokemon.image}
-                    size={280}
-                    alt={pokemon.name}
-                    padding={10}
-                  />
-                  <SoundIcon
-                    onClick={() => getNativeApi().playAudio(pokemon.sound)}
-                    style={{
-                      position: "absolute",
-                      bottom: 10,
-                      left: 10,
-                      cursor: "pointer",
-                    }}
-                  />
-                </div>
-              </Column>
-              <Column span={8} sm={16} md={8} lg={8}>
-                <StackLayout size={5}>
-                  <h1>{name}</h1>
-                  {pokemon.types}
-                  <ProgressBar
-                    label=""
-                    helperText={`CP: ${pokemon.maxCP}`}
-                    value={pokemon.maxCP / 100}
-                  />
-                  <ProgressBar
-                    label=""
-                    helperText={`HP: ${pokemon.maxHP}`}
-                    value={pokemon.maxHP / 100}
-                  />
-
-                  <Grid condensed style={{ width: "100%" }}>
-                    <Column span={4} sm={8} md={4} lg={4}>
-                      <Center>
-                        <div style={{ fontWeight: "bold", marginBottom: 5 }}>
-                          Weight
-                        </div>
-                        {pokemon.weight.minimum} - {pokemon.weight.maximum}
-                      </Center>
-                    </Column>
-                    <Column span={4} sm={8} md={4} lg={4}>
-                      <Center>
-                        <div style={{ fontWeight: "bold", marginBottom: 5 }}>
-                          Height
-                        </div>
-                        {pokemon.height.minimum} - {pokemon.height.maximum}
-                      </Center>
-                    </Column>
-                  </Grid>
-                </StackLayout>
-              </Column>
-            </Grid>
+            <PokemonDetail pokemon={pokemon} />
 
             <div>
               <h2>Evolutions</h2>

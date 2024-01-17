@@ -10,6 +10,7 @@ import { PokemonsFilter } from "./parts/pokemonsFilter";
 import { PokemonsContent } from "./parts/pokemonsContent";
 import { usePokemons } from "./pokemonsApi";
 import { mainContentId } from "../common/constants/layoutConstants";
+import { PokemonModal } from "./parts/pokemonModal";
 
 const pokemonsPerPage = 20;
 
@@ -22,6 +23,10 @@ export default function PokemonsPage(): JSX.Element {
   const { data: pokemonTypesData } = usePokemonTypes();
   const [layout, setLayout] = useState<Layout>(Layout.Grid);
   const [page, setPage] = useState<number>(0);
+  const [previewOpened, setPreviewOpened] = useState<boolean>(false);
+  const [selectedPokemon, setSelectedPokemon] = useState<string | undefined>(
+    undefined
+  );
   const query = useMemo(
     () => ({
       limit: pokemonsPerPage,
@@ -81,8 +86,22 @@ export default function PokemonsPage(): JSX.Element {
       />
 
       <Padding top={10} bottom={5}>
-        <PokemonsContent layout={layout} data={data} />
+        <PokemonsContent
+          layout={layout}
+          data={data}
+          onPreviewOpened={(pokemonName: string) => {
+            setPreviewOpened(true);
+            setSelectedPokemon(pokemonName);
+          }}
+        />
       </Padding>
+      {selectedPokemon && (
+        <PokemonModal
+          pokemonName={selectedPokemon}
+          opened={previewOpened}
+          onClose={() => setPreviewOpened(false)}
+        />
+      )}
     </Container>
   );
 }

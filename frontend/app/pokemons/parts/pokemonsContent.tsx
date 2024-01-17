@@ -9,11 +9,13 @@ import { PokemonsQuery } from "@/app/gql/graphql";
 export type PokemonsContentProps = {
   layout: Layout;
   data: PokemonsQuery | undefined;
+  onPreviewOpened?: (pokemonName: string) => void;
 };
 
 export function PokemonsContent({
   layout,
   data,
+  onPreviewOpened,
 }: PokemonsContentProps): JSX.Element {
   const pokemons = data?.pokemons.edges;
   const { togglePokemonFavorite } = usePokemonsFavorite();
@@ -33,6 +35,9 @@ export function PokemonsContent({
               event.preventDefault();
               togglePokemonFavorite(pokemon.id, pokemon.isFavorite);
             }}
+            onPreviewOpened={() =>
+              onPreviewOpened && onPreviewOpened(pokemon.name)
+            }
           />
         ))}
       </PokemonLayout>

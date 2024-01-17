@@ -9,6 +9,7 @@ import {
   VolumeUp,
   Bat,
   TaskRemove,
+  View,
 } from "@carbon/icons-react";
 
 export const CatalogIcon = Catalog;
@@ -21,3 +22,4 @@ export const MoonIcon = Moon;
 export const SoundIcon = VolumeUp;
 export const PokemonIcon = Bat;
 export const NoContentIcon = TaskRemove;
+export const ViewIcon = View;

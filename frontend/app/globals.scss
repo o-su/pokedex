@@ -69,15 +69,6 @@ a {
   text-decoration: none;
 }
 
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 .logo:hover {
   animation: bounce 1s ease;
 }
@@ -112,7 +103,7 @@ a {
 }
 
 #theme-switch:hover {
-  animation: rise 2s ease;
+  animation: rise 1s ease;
 }
 
 @keyframes rise {
