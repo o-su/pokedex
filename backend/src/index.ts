@@ -1,9 +1,8 @@
-#!/usr/bin/env node
-const { ApolloServer } = require('apollo-server-express');
-const express = require('express');
-const fs = require('fs');
-const _ = require('lodash');
-const pokemonsData = require('./pokemons');
+import { ApolloServer } from "apollo-server-express";
+import express from "express";
+import fs from "fs";
+import _ from "lodash";
+import pokemonsData from "./pokemons.json";
 
 const PORT = 4000;
 const BASE_URL = `http://localhost:${PORT}`;
