@@ -65,14 +65,14 @@ export function PokemonsFilter({
         {pokemonTypes && (
           <Select
             id="pokemon-type"
-            placeholder="Select Type"
-            allowCustomValue={false}
+            label="Select Type"
             items={[defaultPokemonType, ...pokemonTypes]}
             initialSelectedItem={defaultPokemonType}
             selectedItem={pokemonType}
             onChange={({ selectedItem }) =>
               selectedItem && setPokemonType(selectedItem)
             }
+            style={{ minWidth: 110 }}
           />
         )}
 

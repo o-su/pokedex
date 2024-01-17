@@ -1,53 +1,44 @@
 "use client";
-import {
-  ComponentProps,
-  ComponentType,
-  InputHTMLAttributes,
-  MouseEvent,
-  ReactNode,
-} from "react";
-import { ComboBox } from "@carbon/react";
-import Downshift from "downshift";
-import { ReactNodeLike } from "@carbon/react/lib/components/DatePickerInput/DatePickerInput";
-import { ListBoxSize } from "@carbon/react/lib/components/ListBox";
 
-export type ComboBoxProps<ItemType> = Omit<
-  InputHTMLAttributes<HTMLInputElement>,
+import { ReactNode } from "react";
+import { Dropdown } from "@carbon/react";
+import { UseSelectProps } from "downshift";
+import { ReactAttr } from "@carbon/react/lib/types/common";
+import { ReactNodeLike } from "@carbon/react/lib/components/DatePickerInput/DatePickerInput";
+import { ListBoxSize, ListBoxType } from "@carbon/react/lib/components/ListBox";
+
+export type DropdownProps<ItemType> = Omit<
+  ReactAttr<HTMLDivElement>,
   ExcludedAttributes
 > & {
-  /**
-   * Specify whether or not the ComboBox should allow a value that is
-   * not in the list to be entered in the input
-   */
-  allowCustomValue?: boolean;
   /**
    * Specify a label to be read by screen readers on the container node
    * 'aria-label' of the ListBox component.
    */
   ["aria-label"]?: string;
   /**
-   * An optional className to add to the container node
-   */
-  className?: string;
-  /**
-   * Specify the direction of the combobox dropdown. Can be either top or bottom.
+   * Specify the direction of the dropdown. Can be either top or bottom.
    */
   direction?: "top" | "bottom";
   /**
-   * Specify if the control should be disabled, or not
+   * Disable the control
    */
   disabled?: boolean;
   /**
    * Additional props passed to Downshift
    */
-  downshiftProps?: ComponentProps<typeof Downshift<ItemType>>;
+  downshiftProps?: Partial<UseSelectProps<ItemType>>;
   /**
    * Provide helper text that is used alongside the control label for
    * additional help
    */
-  helperText?: ReactNode;
+  helperText?: React.ReactNode;
   /**
-   * Specify a custom `id` for the input
+   * Specify whether the title text should be hidden or not
+   */
+  hideLabel?: boolean;
+  /**
+   * Specify a custom `id`
    */
   id: string;
   /**
@@ -62,84 +53,69 @@ export type ComboBoxProps<ItemType> = Omit<
   /**
    * Message which is displayed if the value is invalid.
    */
-  invalidText?: ReactNode;
+  invalidText?: React.ReactNode;
   /**
-   * Optional function to render items as custom components instead of strings.
+   * Function to render items as custom components instead of strings.
    * Defaults to null and is overridden by a getter
    */
-  itemToElement?: ComponentType<ItemType> | null;
+  itemToElement?: React.JSXElementConstructor<ItemType> | null;
   /**
    * Helper function passed to downshift that allows the library to render a
    * given item to a string label. By default, it extracts the `label` field
-   * from a given item to serve as the item label in the list
+   * from a given item to serve as the item label in the list.
    */
-  itemToString?: ItemToStringHandler<ItemType>;
+  itemToString?(item: ItemType | null): string;
   /**
    * We try to stay as generic as possible here to allow individuals to pass
    * in a collection of whatever kind of data structure they prefer
    */
   items: ItemType[];
   /**
-     * `onChange` is a utility for this controlled component to communicate to a
-     * consuming component when a specific dropdown item is selected.
-     * `({ selectedItem }) => void`
-    //  * @param {{ selectedItem }}
-     */
-  onChange: (data: OnChangeData<ItemType>) => void;
-  /**
-   * Callback function to notify consumer when the text input changes.
-   * This provides support to change available items based on the text.
-   * `(inputText) => void`
-   * @param {string} inputText
+   * Generic `label` that will be used as the textual representation of what
+   * this field is for
    */
-  onInputChange?: (inputText: string) => void;
+  label: NonNullable<ReactNode>;
   /**
-   * Callback function that fires when the combobox menu toggle is clicked
-   * `(evt) => void`
-   * @param {MouseEvent} event
+   * `onChange` is a utility for this controlled component to communicate to a
+   * consuming component what kind of internal state changes are occurring.
    */
-  onToggleClick?: (evt: MouseEvent<HTMLButtonElement>) => void;
+  onChange?(data: OnChangeData<ItemType>): void;
   /**
-   * Used to provide a placeholder text node before a user enters any input.
-   * This is only present if the control has no items selected
-   */
-  placeholder?: string;
-  /**
-   * Is the ComboBox readonly?
+   * Whether or not the Dropdown is readonly
    */
   readOnly?: boolean;
   /**
-   * For full control of the selection
+   * An optional callback to render the currently selected item as a react element instead of only
+   * as a string.
    */
-  selectedItem?: ItemType | null;
+  renderSelectedItem?(
+    item: ItemType
+  ): React.JSXElementConstructor<ItemType> | null;
   /**
-   * Specify your own filtering logic by passing in a `shouldFilterItem`
-   * function that takes in the current input and an item and passes back
-   * whether or not the item should be filtered.
+   * In the case you want to control the dropdown selection entirely.
    */
-  shouldFilterItem?: (input: {
-    item: ItemType;
-    itemToString?: ItemToStringHandler<ItemType>;
-    inputValue: string | null;
-  }) => boolean;
+  selectedItem?: ItemType;
   /**
    * Specify the size of the ListBox. Currently supports either `sm`, `md` or `lg` as an option.
    */
   size?: ListBoxSize;
   /**
-   * **Experimental**: Provide a `Slug` component to be rendered inside the `ComboBox` component
+   * **Experimental**: Provide a `Slug` component to be rendered inside the `Dropdown` component
    */
   slug?: ReactNodeLike;
   /**
-   * Provide text to be used in a `<label>` element that is tied to the
-   * combobox via ARIA attributes.
+   * Provide the title text that will be read by a screen reader when
+   * visiting this control
    */
-  titleText?: ReactNode;
+  titleText?: React.ReactNode;
   /**
-   * Specify a custom translation function that takes in a message identifier
-   * and returns the localized string for the message
+   * Callback function for translating ListBoxMenuIcon SVG title
    */
-  translateWithId?: (id: string) => string;
+  translateWithId?(messageId: string, args?: Record<string, unknown>): string;
+  /**
+   * The dropdown type, `default` or `inline`
+   */
+  type?: ListBoxType;
   /**
    * Specify whether the control is currently in warning state
    */
@@ -147,16 +123,20 @@ export type ComboBoxProps<ItemType> = Omit<
   /**
    * Provide the text that is displayed when the control is in warning state
    */
-  warnText?: ReactNode;
+  warnText?: React.ReactNode;
 };
 
-type ExcludedAttributes = "id" | "onChange" | "onClick" | "type" | "size";
-type OnChangeData<ItemType> = {
-  selectedItem: ItemType | null | undefined;
-  inputValue?: string | null;
-};
-type ItemToStringHandler<ItemType> = (item: ItemType | null) => string;
+type ExcludedAttributes = "id" | "onChange";
 
-export function Select<T>(props: ComboBoxProps<T>): JSX.Element {
-  return <ComboBox {...props} />;
+type DropdownComponentProps<ItemType> = React.PropsWithoutRef<
+  React.PropsWithChildren<DropdownProps<ItemType>> &
+    React.RefAttributes<HTMLButtonElement>
+>;
+
+export type OnChangeData<ItemType> = {
+  selectedItem: ItemType | null;
+};
+
+export function Select<T>(props: DropdownComponentProps<T>): JSX.Element {
+  return <Dropdown {...props} />;
 }
