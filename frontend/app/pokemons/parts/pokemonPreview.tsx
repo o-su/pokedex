@@ -1,6 +1,6 @@
 import { InlineLoader } from "@/app/common/components/inlineLoader";
 import { PokemonDetail } from "@/app/common/components/pokemonDetail";
-import { usePokemon } from "@/app/pokemon/[name]/pokemonApi";
+import { usePokemon } from "@/app/common/api/pokemonApi";
 
 export type PokemonPreviewProps = {
   pokemonName: string;

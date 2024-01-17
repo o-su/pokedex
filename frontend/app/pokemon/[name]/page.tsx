@@ -7,7 +7,7 @@ import { BreadcrumbItem } from "@/app/common/components/breadcrumbItem";
 import { Container } from "@/app/common/components/layout/container";
 import { StackLayout } from "@/app/common/components/layout/stackLayout";
 import { PokemonCard } from "@/app/common/components/pokemonCard";
-import { usePokemon } from "./pokemonApi";
+import { usePokemon } from "../../common/api/pokemonApi";
 import { Route } from "@/app/common/constants/routeConstants";
 import { Padding } from "@/app/common/components/layout/padding";
 import { PokemonLayout } from "@/app/common/components/layout/pokemonLayout";

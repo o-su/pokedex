@@ -1,6 +1,6 @@
 import { useQuery } from "@apollo/client";
 
-import { pokemonQuery } from "./pokemonQueries";
+import { pokemonQuery } from "../queries/pokemonQueries";
 
 export function usePokemon(name: string) {
   const result = useQuery(pokemonQuery, {

@@ -1,4 +1,7 @@
+import { Route } from "@/app/common/constants/routeConstants";
 import { Modal } from "@carbon/react";
+import { useRouter } from "next/navigation";
+
 import { PokemonPreview } from "./pokemonPreview";
 
 export type PokemonModalProps = {
@@ -12,11 +15,14 @@ export function PokemonModal({
   opened,
   onClose,
 }: PokemonModalProps): JSX.Element {
+  const router = useRouter();
+
   return (
     <Modal
       modalHeading={pokemonName}
-      passiveModal
       open={opened}
+      primaryButtonText="Full Detail"
+      onRequestSubmit={() => router.push(Route.Pokemon + pokemonName)}
       onRequestClose={onClose}
     >
       <PokemonPreview pokemonName={pokemonName} />
