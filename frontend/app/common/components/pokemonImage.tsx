@@ -1,8 +1,8 @@
 import { ThemeId } from "@/app/appState";
-import { useTheme } from "@carbon/react";
 import Image from "next/image";
 
 import { Color } from "../constants/colorConstants";
+import { useTheme } from "../hooks/themeHook";
 
 export type PokemonImageProps = {
   src: string;
@@ -20,16 +20,21 @@ export function PokemonImage({
   const { theme } = useTheme();
 
   return (
-    <div
-      style={{
-        padding,
-        background: Color.White,
-        filter: theme === ThemeId.Dark ? "brightness(70%)" : undefined,
-        borderTopLeftRadius: 3,
-        borderTopRightRadius: 3,
-      }}
-    >
+    <div style={getPokemonImageStyle(padding, theme)}>
       <Image src={src} width={size} height={size} alt={alt} />
     </div>
   );
+}
+
+function getPokemonImageStyle(
+  padding: string | number | undefined,
+  theme: ThemeId
+) {
+  return {
+    padding,
+    background: Color.White,
+    filter: theme === ThemeId.Dark ? "brightness(70%)" : undefined,
+    borderTopLeftRadius: 3,
+    borderTopRightRadius: 3,
+  };
 }

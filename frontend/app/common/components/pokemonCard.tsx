@@ -1,6 +1,5 @@
 "use client";
 import { MouseEvent, ReactSVGElement } from "react";
-import { useTheme } from "@carbon/react";
 import Link from "next/link";
 
 import {
@@ -12,6 +11,7 @@ import { Color } from "@/app/common/constants/colorConstants";
 import { ThemeId } from "@/app/appState";
 import { Route } from "../constants/routeConstants";
 import { PokemonImage } from "./pokemonImage";
+import { useTheme } from "../hooks/themeHook";
 
 export type PokemonCardProps = {
   name: string;
@@ -73,7 +73,7 @@ export function PokemonCard({
           </div>
 
           <FavoriteActiveIcon
-            style={{ float: "right", cursor: "pointer" }}
+            style={{ float: "right", cursor: "pointer", marginTop: 5 }}
             color={Color.Red}
             size={20}
             onClick={onToggleFavorite}

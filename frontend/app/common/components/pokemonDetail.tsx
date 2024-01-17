@@ -1,4 +1,5 @@
 "use client";
+
 import { StackLayout } from "@/app/common/components/layout/stackLayout";
 import { ProgressBar } from "@/app/common/components/progressBar";
 import { Grid } from "@/app/common/components/layout/grid";
@@ -9,6 +10,7 @@ import { SoundIcon } from "@/app/common/components/icon";
 import { getNativeApi } from "@/app/common/services/nativeApi";
 import { Padding } from "./layout/padding";
 import { PokemonByNameQuery } from "@/app/gql/graphql";
+import { CSSProperties } from "react";
 
 export type PokemonDetailProps = {
   pokemon: NonNullable<PokemonByNameQuery["pokemonByName"]>;
@@ -27,12 +29,7 @@ export function PokemonDetail({ pokemon }: PokemonDetailProps): JSX.Element {
           />
           <SoundIcon
             onClick={() => getNativeApi().playAudio(pokemon.sound)}
-            style={{
-              position: "absolute",
-              bottom: 10,
-              left: 10,
-              cursor: "pointer",
-            }}
+            style={soundIconStyle}
           />
         </div>
       </Column>
@@ -55,17 +52,13 @@ export function PokemonDetail({ pokemon }: PokemonDetailProps): JSX.Element {
             <Grid condensed style={{ width: "100%" }}>
               <Column span={4} sm={8} md={4} lg={4}>
                 <Center>
-                  <div style={{ fontWeight: "bold", marginBottom: 5 }}>
-                    Weight
-                  </div>
+                  <div style={labelStyle}>Weight</div>
                   {pokemon.weight.minimum} - {pokemon.weight.maximum}
                 </Center>
               </Column>
               <Column span={4} sm={8} md={4} lg={4}>
                 <Center>
-                  <div style={{ fontWeight: "bold", marginBottom: 5 }}>
-                    Height
-                  </div>
+                  <div style={labelStyle}>Height</div>
                   {pokemon.height.minimum} - {pokemon.height.maximum}
                 </Center>
               </Column>
@@ -76,3 +69,15 @@ export function PokemonDetail({ pokemon }: PokemonDetailProps): JSX.Element {
     </Grid>
   );
 }
+
+const labelStyle: CSSProperties = {
+  fontWeight: "bold",
+  marginBottom: 5,
+};
+
+const soundIconStyle: CSSProperties = {
+  position: "absolute",
+  bottom: 10,
+  left: 10,
+  cursor: "pointer",
+};

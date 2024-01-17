@@ -1,5 +1,7 @@
 "use client";
+
 import { PropsWithChildren, createContext, Dispatch, useReducer } from "react";
+
 import { NotificationData } from "./common/types/notificationTypes";
 
 export enum ThemeId {

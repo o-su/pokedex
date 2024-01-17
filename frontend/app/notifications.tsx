@@ -1,5 +1,7 @@
 "use client";
 
+import { CSSProperties } from "react";
+
 import { StackLayout } from "./common/components/layout/stackLayout";
 import { Notification } from "./common/components/notification";
 import { appHeaderHeight } from "./common/constants/layoutConstants";
@@ -9,14 +11,7 @@ export function Notifications(): JSX.Element {
   const { notifications, deleteNotification } = useNotifications();
 
   return (
-    <div
-      style={{
-        position: "absolute",
-        right: 10,
-        top: appHeaderHeight + 10,
-        zIndex: 4,
-      }}
-    >
+    <div style={notificationsStyle}>
       <StackLayout size={5}>
         {notifications.map((notification) => (
           <Notification
@@ -34,3 +29,10 @@ export function Notifications(): JSX.Element {
     </div>
   );
 }
+
+const notificationsStyle: CSSProperties = {
+  position: "absolute",
+  top: appHeaderHeight + 10,
+  right: 10,
+  zIndex: 4, // carbon content switch has z-index 3
+};

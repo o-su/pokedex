@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import "./globals.scss";
+
 import { AppHeader } from "./common/components/appHeader";
 import { AppLayout } from "./common/components/layout/appLayout";
-
-import "./globals.scss";
 import { Providers } from "./providers";
 import { Notifications } from "./notifications";
 

@@ -29,18 +29,7 @@ export function AppHeader(): JSX.Element {
             <Logo width={30} height={30} />
           </Link>
         </div>
-        <div
-          id="theme-switch"
-          style={{
-            float: "right",
-            cursor: "pointer",
-            lineHeight: `${appHeaderHeight}px`,
-            color: Color.White,
-            paddingLeft: 10,
-            paddingRight: 10,
-          }}
-          onClick={toggleTheme}
-        >
+        <div id="theme-switch" style={themeSwitchStyle} onClick={toggleTheme}>
           {theme === ThemeId.Dark ? <SunIcon /> : <MoonIcon />}
         </div>
       </Container>
@@ -55,3 +44,12 @@ function getHeaderStyle(theme: ThemeId): CSSProperties {
     background: theme === ThemeId.Dark ? Color.SmokyBlack : Color.ChineseBlack,
   };
 }
+
+const themeSwitchStyle: CSSProperties = {
+  float: "right",
+  cursor: "pointer",
+  lineHeight: `${appHeaderHeight}px`,
+  color: Color.White,
+  paddingLeft: 10,
+  paddingRight: 10,
+};

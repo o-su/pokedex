@@ -1,7 +1,7 @@
-import { Route } from "@/app/common/constants/routeConstants";
 import { Modal } from "@carbon/react";
-import { useRouter } from "next/navigation";
 
+import { Route } from "@/app/common/constants/routeConstants";
+import { useRouter } from "next/navigation";
 import { PokemonPreview } from "./pokemonPreview";
 
 export type PokemonModalProps = {
@@ -19,7 +19,6 @@ export function PokemonModal({
 
   return (
     <Modal
-      modalHeading={pokemonName}
       open={opened}
       primaryButtonText="Full Detail"
       onRequestSubmit={() => router.push(Route.Pokemon + pokemonName)}
