@@ -3,6 +3,7 @@ import express from "express";
 import fs from "fs";
 import _ from "lodash";
 
+import { Favorites } from "./favorites";
 import pokemonsData from "./pokemons.json";
 import { Pokemon, PokemonAttack, PokemonsApiData } from "./types";
 import { filterPokemons, prepareEvolutions, resolveImageUrl } from "./utils";
@@ -10,8 +11,8 @@ import { filterPokemons, prepareEvolutions, resolveImageUrl } from "./utils";
 const PORT = 4000;
 const BASE_URL = `http://localhost:${PORT}`;
 const typeDefs = fs.readFileSync(`${__dirname}/schema.graphql`, "utf-8");
-const favorites = new Map<string, boolean>();
 const app = express();
+const favorites = new Favorites();
 
 app.get("/sounds/:id", (req, res) =>
   res.sendFile(`${__dirname}/sounds/${req.params.id}.mp3`)
@@ -19,7 +20,7 @@ app.get("/sounds/:id", (req, res) =>
 
 const resolvers = {
   Query: {
-    pokemons: (__, args: PokemonsApiData) =>
+    pokemons: async (__, args: PokemonsApiData) =>
       filterPokemons(args.query, favorites, pokemonsData),
     pokemonById: (_, args) =>
       pokemonsData.find((pokemon) => pokemon.id === args.id),
@@ -31,25 +32,25 @@ const resolvers = {
       _.uniq(_.flatMap(pokemonsData, (pokemon) => pokemon.types)),
   },
   Mutation: {
-    favoritePokemon: (_, args) => {
+    favoritePokemon: async (_, args) => {
       const pokemon = pokemonsData.find((pokemon) => pokemon.id === args.id);
 
       if (!pokemon) {
         throw Error("Pokemon not found");
       }
 
-      favorites.set(args.id, true);
+      await favorites.markPokemonAsFavorite(args.id);
 
       return pokemon;
     },
-    unFavoritePokemon: (_, args) => {
+    unFavoritePokemon: async (_, args) => {
       const pokemon = pokemonsData.find((pokemon) => pokemon.id === args.id);
 
       if (!pokemon) {
         throw Error("Pokemon not found");
       }
 
-      favorites.set(args.id, false);
+      await favorites.unmarkPokemonAsFavorite(args.id);
 
       return pokemon;
     },
@@ -60,7 +61,11 @@ const resolvers = {
     sound: (pokemon: Pokemon) =>
       `${BASE_URL}/sounds/${parseInt(pokemon.id, 10)}`,
     evolutions: (pokemon: Pokemon) => prepareEvolutions(pokemon.evolutions),
-    isFavorite: (pokemon: Pokemon) => !!favorites.get(pokemon.id),
+    isFavorite: async (pokemon: Pokemon) => {
+      const favoritePokemons = await favorites.getFavoritePokemons();
+
+      return favoritePokemons.includes(pokemon.id);
+    },
   },
   PokemonAttack: {
     fast: (pokemonAttack: PokemonAttack) => pokemonAttack.fast || [],
@@ -69,6 +74,7 @@ const resolvers = {
 };
 
 const server = new ApolloServer({ typeDefs, resolvers });
+
 server.applyMiddleware({ app });
 
 app.listen({ port: PORT }, () => {

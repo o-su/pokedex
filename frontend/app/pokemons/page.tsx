@@ -69,7 +69,7 @@ export default function PokemonsPage(): JSX.Element {
     mainContent?.addEventListener("scroll", loadMoreCallback);
 
     return () => mainContent?.removeEventListener("scroll", loadMoreCallback);
-  }, [page]);
+  }, [page, loadMore]);
 
   return (
     <Container>
@@ -88,7 +88,7 @@ export default function PokemonsPage(): JSX.Element {
       <Padding top={10} bottom={5}>
         <PokemonsContent
           layout={layout}
-          data={data}
+          pokemons={data?.pokemons.edges}
           onPreviewOpened={(pokemonName: string) => {
             setPreviewOpened(true);
             setSelectedPokemon(pokemonName);

@@ -8,22 +8,21 @@ import { PokemonsQuery } from "@/app/gql/graphql";
 
 export type PokemonsContentProps = {
   layout: Layout;
-  data: PokemonsQuery | undefined;
+  pokemons: PokemonsQuery["pokemons"]["edges"] | undefined;
   onPreviewOpened?: (pokemonName: string) => void;
 };
 
 export function PokemonsContent({
   layout,
-  data,
+  pokemons,
   onPreviewOpened,
 }: PokemonsContentProps): JSX.Element {
-  const pokemons = data?.pokemons.edges;
   const { togglePokemonFavorite } = usePokemonsFavorite();
 
   if (pokemons && pokemons.length > 0) {
     return (
       <PokemonLayout layout={layout}>
-        {data?.pokemons.edges.map((pokemon) => (
+        {pokemons.map((pokemon) => (
           <PokemonCard
             name={pokemon.name}
             key={pokemon.id}

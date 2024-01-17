@@ -6,6 +6,7 @@
 
 ```shell
 cd backend
+docker-compose up # starts postgres db
 npm install
 npm run start
 ```

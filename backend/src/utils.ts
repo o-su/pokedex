@@ -1,4 +1,5 @@
 import _ from "lodash";
+import { Favorites } from "./favorites";
 
 import {
   PokemonConnection,
@@ -6,11 +7,12 @@ import {
   PokemonsApiQueryData,
 } from "./types";
 
-export function filterPokemons(
+export async function filterPokemons(
   query: PokemonsApiQueryData,
-  favorites: Map<string, boolean>,
+  favorites: Favorites,
   pokemonsData
-): PokemonConnection {
+): Promise<PokemonConnection> {
+  const favoritePokemons = await favorites.getFavoritePokemons();
   const { limit, offset, search, filter } = query;
   let pokemons = pokemonsData;
 
@@ -29,7 +31,7 @@ export function filterPokemons(
     }
 
     if (filter.isFavorite) {
-      pokemons = _.filter(pokemons, (p) => !!favorites.get(p.id));
+      pokemons = _.filter(pokemons, (p) => favoritePokemons.includes(p.id));
     }
   }
 

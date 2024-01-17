@@ -6,6 +6,7 @@ import {
   pokemonsUnmarkFavoriteMutation,
 } from "../queries/pokemonsQueries";
 import { useNotifications } from "../hooks/notificationsHook";
+import { graphqlClient } from "../services/graphqlClient";
 
 export function usePokemonsFavorite() {
   const { addNotification } = useNotifications();
@@ -18,10 +19,17 @@ export function usePokemonsFavorite() {
     pokemonsUnmarkFavoriteMutation
   );
 
+  const refetchPokemons = useCallback(() => {
+    graphqlClient.refetchQueries({
+      include: ["pokemons"],
+    });
+  }, []);
+
   const markPokemonAsFavorite = useCallback(
     async (pokemonId: string) => {
       try {
         await markAsFavorite({ variables: { id: pokemonId } });
+        refetchPokemons();
         addNotification({
           kind: "success",
           message: "Marked pokemon as favorite",
@@ -33,13 +41,14 @@ export function usePokemonsFavorite() {
         });
       }
     },
-    [markAsFavorite, addNotification]
+    [markAsFavorite, addNotification, refetchPokemons]
   );
 
   const unmarkPokemonAsFavorite = useCallback(
     async (pokemonId: string) => {
       try {
         await unmarkAsFavorite({ variables: { id: pokemonId } });
+        refetchPokemons();
         addNotification({
           kind: "success",
           message: "Unmarked pokemon as favorite",
@@ -51,7 +60,7 @@ export function usePokemonsFavorite() {
         });
       }
     },
-    [unmarkAsFavorite, addNotification]
+    [unmarkAsFavorite, addNotification, refetchPokemons]
   );
 
   const togglePokemonFavorite = useCallback(
