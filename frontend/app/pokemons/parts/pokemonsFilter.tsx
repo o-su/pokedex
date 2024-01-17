@@ -62,27 +62,30 @@ export function PokemonsFilter({
       </ContentSwitcher>
 
       <div style={{ display: "flex", marginTop: 5 }}>
-        {pokemonTypes && (
-          <Select
-            id="pokemon-type"
-            label="Select Type"
-            items={[defaultPokemonType, ...pokemonTypes]}
-            initialSelectedItem={defaultPokemonType}
-            selectedItem={pokemonType}
-            onChange={({ selectedItem }) =>
-              selectedItem && setPokemonType(selectedItem)
-            }
-            style={{ minWidth: 110 }}
-          />
-        )}
+        <div style={{ flexGrow: 1, minWidth: 100 }}>
+          {pokemonTypes && (
+            <Select
+              id="pokemon-type"
+              label="Select Type"
+              items={[defaultPokemonType, ...pokemonTypes]}
+              initialSelectedItem={defaultPokemonType}
+              selectedItem={pokemonType}
+              onChange={({ selectedItem }) =>
+                selectedItem && setPokemonType(selectedItem)
+              }
+            />
+          )}
+        </div>
 
-        <SearchInput
-          placeholder="Search"
-          labelText="Search"
-          closeButtonLabelText="Clear search input"
-          value={search}
-          onChange={(event) => setSearch(event.target.value)}
-        />
+        <div style={{ flexGrow: 2 }}>
+          <SearchInput
+            placeholder="Search"
+            labelText="Search"
+            closeButtonLabelText="Clear search input"
+            value={search}
+            onChange={(event) => setSearch(event.target.value)}
+          />
+        </div>
         <div>
           <ContentSwitcher
             size="md"
