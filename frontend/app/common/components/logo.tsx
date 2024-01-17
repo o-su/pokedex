@@ -12,7 +12,7 @@ export function Logo({ width, height }: LogoProps): JSX.Element {
       width={width}
       height={height}
       className="logo"
-      alt="logo"
+      alt="Pokédex logo"
     />
   );
 }

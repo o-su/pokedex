@@ -1,5 +1,7 @@
 "use client";
 
+import { CSSProperties } from "react";
+
 import { StackLayout } from "@/app/common/components/layout/stackLayout";
 import { ProgressBar } from "@/app/common/components/progressBar";
 import { Grid } from "@/app/common/components/layout/grid";
@@ -10,7 +12,6 @@ import { SoundIcon } from "@/app/common/components/icon";
 import { getNativeApi } from "@/app/common/services/nativeApi";
 import { Padding } from "./layout/padding";
 import { PokemonByNameQuery } from "@/app/gql/graphql";
-import { CSSProperties } from "react";
 
 export type PokemonDetailProps = {
   pokemon: NonNullable<PokemonByNameQuery["pokemonByName"]>;
@@ -30,6 +31,8 @@ export function PokemonDetail({ pokemon }: PokemonDetailProps): JSX.Element {
           <SoundIcon
             onClick={() => getNativeApi().playAudio(pokemon.sound)}
             style={soundIconStyle}
+            tabIndex={0}
+            aria-label="play pokemon sound"
           />
         </div>
       </Column>

@@ -37,7 +37,12 @@ export function PokemonCard({
   const imageSize = condensed ? 50 : 120;
 
   return (
-    <Link href={Route.Pokemon + encodeURIComponent(name)}>
+    <Link
+      href={Route.Pokemon + encodeURIComponent(name)}
+      aria-label={name}
+      role="link"
+      tabIndex={0}
+    >
       <div
         style={{
           display: "flex",
